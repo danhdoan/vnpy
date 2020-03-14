@@ -13,14 +13,19 @@ STOPORDER_PREFIX = "STOP"
 
 
 class StopOrderStatus(Enum):
-    WAITING = "等待中"
-    CANCELLED = "已撤销"
-    TRIGGERED = "已触发"
+    # BRIAN: 等待中 - Waiting
+    WAITING = "Waiting"
+    # BRIAN: 已撤销 - Canceled
+    CANCELLED = "Canceled"
+    # BRIAN: 已触发 - Trigger
+    TRIGGERED = "Trigger"
 
 
 class EngineType(Enum):
-    LIVE = "实盘"
-    BACKTESTING = "回测"
+    # BRIAN: 实盘 - Live
+    LIVE = "Live"
+    # BRIAN: 回测 - Backtesting
+    BACKTESTING = "Backtesting"
 
 
 class BacktestingMode(Enum):

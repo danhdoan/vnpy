@@ -705,3 +705,21 @@
 # send_email
 #
 # BRIAN: CTA策略引擎 - CTA Strategy Engine
+
+
+# ======================================
+# vnpy/app/cta_strategy/base.py
+# ======================================
+
+#
+# StopOrderStatus
+#
+# BRIAN: 等待中 - Waiting
+# BRIAN: 已撤销 - Canceled
+# BRIAN: 已触发 - Trigger
+
+#
+# EngineType
+#
+# BRIAN: 实盘 - Live
+# BRIAN: 回测 - Backtesting
