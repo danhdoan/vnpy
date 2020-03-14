@@ -446,3 +446,115 @@
 # load_contract_data
 #
 # BRIAN: 本地缓存合约信息加载成功 - Local cache contract information loaded successfully
+
+
+# ======================================
+# vnpy/app/datamanager/ui/widget.py
+# ======================================
+#
+# init_ui
+#
+# BRIAN: 数据管理 - Data Management
+# BRIAN: 刷新 - Refresh
+# BRIAN: 导入数据 - Import Data
+
+#
+# init_tree
+#
+# BRIAN: 数据 - Data
+# BRIAN: 本地代码 - Native Symbol
+# BRIAN: 代码 - Symbol
+# BRIAN: 交易所 - Exchange
+# BRIAN: 数据量 - Amount of Data
+# BRIAN: 开始时间 - Start time
+# BRIAN: 结束时间 - End time
+# BRIAN: K线数据 - K-line data
+# BRIAN: 分钟线 - Minute line
+# BRIAN: 小时线 - Hour line
+# BRIAN: 日线 - Daily line
+
+#
+# init_table
+# 
+# BRIAN: 时间 - Time
+# BRIAN: 开盘价 - Open price
+# BRIAN: 最高价 - Highest price
+# BRIAN: 最低价 - Lowest price
+# BRIAN: 收盘价 - Close price
+# BRIAN: 成交量 - Volume
+# BRIAN: 持仓量 - Open interest
+
+#
+# refresh_tree
+# 
+# BRIAN: 导出 - Export 
+# BRIAN: 查看 - Show
+
+#
+# import_data
+#
+# BRIAN: CSV载入成功 - CSV loaded successfully
+# BRIAN: 代码 - Symbol
+# BRIAN: 交易所 - Exchange
+# BRIAN: 周期 - Interval
+# BRIAN: 起始 - Start
+# BRIAN: 结束 - End
+# BRIAN: 总数量 - Total amount
+# BRIAN: 载入成功 - Loaded successfully
+
+#
+# output_data
+#
+# BRIAN: 导出数据 - Export data
+# BRIAN: 导出失败 - Export failed
+# BRIAN: 该文件已在其他程序中打开，请关闭相关程序后再尝试导出数据
+# The file is already open in another program, please close the program before trying to export the data
+
+#
+# DateRangeDialog
+#
+
+#
+# __init__
+#
+# BRIAN: 选择数据区间 - Select data interval 
+# BRIAN: 确定 - Apply
+# BRIAN: 开始时间 - Start time
+# BRIAN: 结束时间 - End time
+
+
+#
+# ImportDialog
+#
+
+#
+# __init__
+#
+# BRIAN: 从CSV文件导入数据 - Importing data from a CSV file
+# BRIAN: 选择文件 - Select file
+# BRIAN: 确定 - Apply
+# BRIAN: 合约信息 - Contract information
+# BRIAN: 表头信息 - Header information
+# BRIAN: 格式信息 - Format information
+# BRIAN: 代码 - Symbol
+# BRIAN: 交易所 - Exchange 
+# BRIAN: 周期 - Interval
+# BRIAN: 时间戳 - Datetime
+# BRIAN: 开盘价 - Open price
+# BRIAN: 最高价 - Highest price
+# BRIAN: 最低价 - Lowest price
+# BRIAN: 收盘价 - Close price
+# BRIAN: 成交量 - Volume
+# BRIAN: 持仓量 - Open interest
+# BRIAN: 时间格式 - Time format
+
+
+
+
+# BRIAN:  - 
+# BRIAN:  - 
+# BRIAN:  - 
+# BRIAN:  - 
+# BRIAN:  - 
+# BRIAN:  - 
+# BRIAN:  - 

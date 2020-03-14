@@ -24,15 +24,18 @@ class ManagerWidget(QtWidgets.QWidget):
 
     def init_ui(self) -> None:
         """"""
-        self.setWindowTitle("数据管理")
+        # BRIAN: 数据管理 - Data Management
+        self.setWindowTitle("Data Management")
 
         self.init_tree()
         self.init_table()
 
-        refresh_button = QtWidgets.QPushButton("刷新")
+        # BRIAN: 刷新 - Refresh
+        refresh_button = QtWidgets.QPushButton("Refresh")
         refresh_button.clicked.connect(self.refresh_tree)
 
-        import_button = QtWidgets.QPushButton("导入数据")
+        # BRIAN: 导入数据 - Import Data
+        import_button = QtWidgets.QPushButton("Import Data")
         import_button.clicked.connect(self.import_data)
 
         hbox1 = QtWidgets.QHBoxLayout()
@@ -52,14 +55,21 @@ class ManagerWidget(QtWidgets.QWidget):
 
     def init_tree(self) -> None:
         """"""
+        # BRIAN: 数据 - Data
+        # BRIAN: 本地代码 - Native Symbol
+        # BRIAN: 代码 - Symbol
+        # BRIAN: 交易所 - Exchange
+        # BRIAN: 数据量 - Amount of Data
+        # BRIAN: 开始时间 - Start time
+        # BRIAN: 结束时间 - End time
         labels = [
-            "数据",
-            "本地代码",
-            "代码",
-            "交易所",
-            "数据量",
-            "开始时间",
-            "结束时间",
+            "Data",
+            "Native Symbol",
+            "Symbol",
+            "Exchange",
+            "Amount of Data",
+            "Start time",
+            "End time",
             "",
             ""
         ]
@@ -69,31 +79,42 @@ class ManagerWidget(QtWidgets.QWidget):
         self.tree.setHeaderLabels(labels)
 
         root = QtWidgets.QTreeWidgetItem(self.tree)
-        root.setText(0, "K线数据")
+        # BRIAN: K线数据 - K-line data
+        root.setText(0, "K-line data")
         root.setExpanded(True)
 
         self.minute_child = QtWidgets.QTreeWidgetItem()
-        self.minute_child.setText(0, "分钟线")
+        # BRIAN: 分钟线 - Minute line        
+        self.minute_child.setText(0, "Minute line")
         root.addChild(self.minute_child)
 
         self.hour_child = QtWidgets.QTreeWidgetItem()
-        self.hour_child.setText(0, "小时线")
+        # BRIAN: 小时线 - Hour line
+        self.hour_child.setText(0, "Hour line")
         root.addChild(self.hour_child)
 
         self.daily_child = QtWidgets.QTreeWidgetItem()
-        self.daily_child.setText(0, "日线")
+        # BRIAN: 日线 - Daily line
+        self.daily_child.setText(0, "Daily line")
         root.addChild(self.daily_child)
 
     def init_table(self) -> None:
         """"""
+        # BRIAN: 时间 - Time
+        # BRIAN: 开盘价 - Open price
+        # BRIAN: 最高价 - Highest price
+        # BRIAN: 最低价 - Lowest price
+        # BRIAN: 收盘价 - Close price
+        # BRIAN: 成交量 - Volume
+        # BRIAN: 持仓量 - Open interest
         labels = [
-            "时间",
-            "开盘价",
-            "最高价",
-            "最低价",
-            "收盘价",
-            "成交量",
-            "持仓量"
+            "Time",
+            "Open price",
+            "Highest price",
+            "Lowest price",
+            "Close price",
+            "Volume",
+            "Open interest"
         ]
 
         self.table = QtWidgets.QTableWidget()
@@ -127,7 +148,8 @@ class ManagerWidget(QtWidgets.QWidget):
                 else:
                     self.daily_child.addChild(item)
 
-                output_button = QtWidgets.QPushButton("导出")
+                # BRIAN: 导出 - Export
+                output_button = QtWidgets.QPushButton("Export")
                 output_func = partial(
                     self.output_data,
                     d["symbol"],
@@ -138,7 +160,8 @@ class ManagerWidget(QtWidgets.QWidget):
                 )
                 output_button.clicked.connect(output_func)
 
-                show_button = QtWidgets.QPushButton("查看")
+                # BRIAN: 查看 - Show
+                show_button = QtWidgets.QPushButton("Show")
                 show_func = partial(
                     self.show_data,
                     d["symbol"],
@@ -195,16 +218,25 @@ class ManagerWidget(QtWidgets.QWidget):
             datetime_format
         )
 
+        # BRIAN: CSV载入成功 - CSV loaded successfully
+        # BRIAN: 代码 - Symbol
+        # BRIAN: 交易所 - Exchange
+        # BRIAN: 周期 - Interval
+        # BRIAN: 起始 - Start
+        # BRIAN: 结束 - End
+        # BRIAN: 总数量 - Total amount
         msg = f"\
-        CSV载入成功\n\
-        代码：{symbol}\n\
-        交易所：{exchange.value}\n\
-        周期：{interval.value}\n\
-        起始：{start}\n\
-        结束：{end}\n\
-        总数量：{count}\n\
+        CSV loaded successfully\n\
+        Symbol: {symbol}\n\
+        Exchange: {exchange.value}\n\
+        Interval: {interval.value}\n\
+        Start: {start}\n\
+        End: {end}\n\
+        Total amount: {count}\n\
         "
-        QtWidgets.QMessageBox.information(self, "载入成功！", msg)
+
+        # BRIAN: 载入成功 - Loaded successfully
+        QtWidgets.QMessageBox.information(self, "Loaded successfully!", msg)
 
     def output_data(
         self,
@@ -223,9 +255,10 @@ class ManagerWidget(QtWidgets.QWidget):
         start, end = dialog.get_date_range()
 
         # Get output file path
+        # BRIAN: 导出数据 - Export data
         path, _ = QtWidgets.QFileDialog.getSaveFileName(
             self,
-            "导出数据",
+            "Export data",
             "",
             "CSV(*.csv)"
         )
@@ -241,11 +274,16 @@ class ManagerWidget(QtWidgets.QWidget):
             end
         )
 
+        # BRIAN: 导出失败 - Export failed
+        # BRIAN: 该文件已在其他程序中打开，请关闭相关程序后再尝试导出数据
+        # The file is already open in another program, 
+        # please close the program before trying to export the data
         if not result:
             QtWidgets.QMessageBox.warning(
                 self,
-                "导出失败！",
-                "该文件已在其他程序中打开，请关闭相关程序后再尝试导出数据。"
+                "Export failed!",
+                "The file is already open in another program, " + \
+                "please close the program before trying to export the data"
             )
 
     def show_data(
@@ -305,7 +343,8 @@ class DateRangeDialog(QtWidgets.QDialog):
         """"""
         super().__init__(parent)
 
-        self.setWindowTitle("选择数据区间")
+        # BRIAN: 选择数据区间 - Select data interval 
+        self.setWindowTitle("Select data interval")
 
         self.start_edit = QtWidgets.QDateEdit(
             QtCore.QDate(
@@ -322,12 +361,15 @@ class DateRangeDialog(QtWidgets.QDialog):
             )
         )
 
-        button = QtWidgets.QPushButton("确定")
+        # BRIAN: 确定 - Apply
+        button = QtWidgets.QPushButton("Apply")
         button.clicked.connect(self.accept)
 
         form = QtWidgets.QFormLayout()
-        form.addRow("开始时间", self.start_edit)
-        form.addRow("结束时间", self.end_edit)
+        # BRIAN: 开始时间 - Start time
+        form.addRow("Start time", self.start_edit)
+        # BRIAN: 结束时间 - End time
+        form.addRow("End time", self.end_edit)
         form.addRow(button)
 
         self.setLayout(form)
@@ -346,17 +388,20 @@ class ImportDialog(QtWidgets.QDialog):
         """"""
         super().__init__()
 
-        self.setWindowTitle("从CSV文件导入数据")
+        # BRIAN: 从CSV文件导入数据 - Importing data from a CSV file
+        self.setWindowTitle("Importing data from a CSV file")
         self.setFixedWidth(300)
 
         self.setWindowFlags(
             (self.windowFlags() | QtCore.Qt.CustomizeWindowHint)
             & ~QtCore.Qt.WindowMaximizeButtonHint)
 
-        file_button = QtWidgets.QPushButton("选择文件")
+        # BRIAN: 选择文件 - Select file
+        file_button = QtWidgets.QPushButton("Select file")
         file_button.clicked.connect(self.select_file)
 
-        load_button = QtWidgets.QPushButton("确定")
+        # BRIAN: 确定 - Apply
+        load_button = QtWidgets.QPushButton("Apply")
         load_button.clicked.connect(self.accept)
 
         self.file_edit = QtWidgets.QLineEdit()
@@ -380,34 +425,48 @@ class ImportDialog(QtWidgets.QDialog):
 
         self.format_edit = QtWidgets.QLineEdit("%Y-%m-%d %H:%M:%S")
 
-        info_label = QtWidgets.QLabel("合约信息")
+        # BRIAN: 合约信息 - Contract information
+        info_label = QtWidgets.QLabel("Contract information")
         info_label.setAlignment(QtCore.Qt.AlignCenter)
 
-        head_label = QtWidgets.QLabel("表头信息")
+        # BRIAN: 表头信息 - Header information
+        head_label = QtWidgets.QLabel("Header information")
         head_label.setAlignment(QtCore.Qt.AlignCenter)
 
-        format_label = QtWidgets.QLabel("格式信息")
+        # BRIAN: 格式信息 - Format information
+        format_label = QtWidgets.QLabel("Format information")
         format_label.setAlignment(QtCore.Qt.AlignCenter)
 
         form = QtWidgets.QFormLayout()
         form.addRow(file_button, self.file_edit)
         form.addRow(QtWidgets.QLabel())
         form.addRow(info_label)
-        form.addRow("代码", self.symbol_edit)
-        form.addRow("交易所", self.exchange_combo)
-        form.addRow("周期", self.interval_combo)
+        # BRIAN: 代码 - Symbol
+        form.addRow("Symbol", self.symbol_edit)
+        # BRIAN: 交易所 - Exchange
+        form.addRow("Exchange", self.exchange_combo)
+        # BRIAN: 周期 - Interval
+        form.addRow("Interval", self.interval_combo)
         form.addRow(QtWidgets.QLabel())
         form.addRow(head_label)
-        form.addRow("时间戳", self.datetime_edit)
-        form.addRow("开盘价", self.open_edit)
-        form.addRow("最高价", self.high_edit)
-        form.addRow("最低价", self.low_edit)
-        form.addRow("收盘价", self.close_edit)
-        form.addRow("成交量", self.volume_edit)
-        form.addRow("持仓量", self.open_interest_edit)
+        # BRIAN: 时间戳 - Datetime
+        form.addRow("Datetime", self.datetime_edit)
+        # BRIAN: 开盘价 - Open price
+        form.addRow("Open price", self.open_edit)
+        # BRIAN: 最高价 - Highest price
+        form.addRow("Highest price", self.high_edit)
+        # BRIAN: 最低价 - Lowest price
+        form.addRow("Lowest price", self.low_edit)
+        # BRIAN: 收盘价 - Close price
+        form.addRow("Lowest price", self.close_edit)
+        # BRIAN: 成交量 - Volume
+        form.addRow("Volume", self.volume_edit)
+        # BRIAN: 持仓量 - Open interest
+        form.addRow("Open interest", self.open_interest_edit)
         form.addRow(QtWidgets.QLabel())
         form.addRow(format_label)
-        form.addRow("时间格式", self.format_edit)
+        # BRIAN: 时间格式 - Time format
+        form.addRow("Time format", self.format_edit)
         form.addRow(QtWidgets.QLabel())
         form.addRow(load_button)
 
