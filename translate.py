@@ -237,3 +237,60 @@
 # BRIAN: 注意 - Note
 # BRIAN: 全局配置的修改需要重启 - Changes to global configuration require restart
 # BRIAN: 后才会生效 - to take effect
+
+
+# ======================================
+# constant.py
+# ======================================
+
+#
+# Direction
+#
+# BRIAN: 多 - Long
+# BRIAN: 空 - Short
+# BRIAN: 净 - Net
+
+#
+# Offset
+#
+# BRIAN: 开 - Open
+# BRIAN: 平 - Close
+# BRIAN: 平今 - Close Today
+# BRIAN: 平昨 - Close Yesterday
+
+#
+# Status
+#
+# BRIAN: 提交中 - Submitting
+# BRIAN: 未成交 - Not Traded
+# BRIAN: 部分成交 - Part Traded
+# BRIAN: 全部成交 - All Traded
+# BRIAN: 已撤销 - Canceled
+# BRIAN: 拒单 - Rejected
+
+#
+# Product
+#
+# BRIAN: 股票 - Equity
+# BRIAN: 期货 - Futures
+# BRIAN: 期权 - Option
+# BRIAN: 指数 - Index
+# BRIAN: 外汇 - Forex
+# BRIAN: 现货 - Spot
+# BRIAN: 债券 - Bond
+# BRIAN: 权证 - Warrant
+# BRIAN: 价差 - Spread
+# BRIAN: 基金 - Fund
+
+#
+# OrderType
+#
+# BRIAN: 限价 - Limit
+# BRIAN: 市价 - Market
+
+#
+# OptionType
+#
+# <TO_CONFIRM>
+# BRIAN: 看涨期权 - Call
+# BRIAN: 看跌期权 - Put

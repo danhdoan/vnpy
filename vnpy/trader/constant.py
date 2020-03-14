@@ -9,9 +9,12 @@ class Direction(Enum):
     """
     Direction of order/trade/position.
     """
-    LONG = "多"
-    SHORT = "空"
-    NET = "净"
+    # BRIAN: 多 - Long
+    LONG = "Long"
+    # BRIAN: 空 - Short
+    SHORT = "Short"
+    # BRIAN: 净 - Net
+    NET = "Net"
 
 
 class Offset(Enum):
@@ -19,47 +22,70 @@ class Offset(Enum):
     Offset of order/trade.
     """
     NONE = ""
-    OPEN = "开"
-    CLOSE = "平"
-    CLOSETODAY = "平今"
-    CLOSEYESTERDAY = "平昨"
+    # BRIAN: 开 - Open
+    OPEN = "Open"
+    # BRIAN: 平 - Close
+    CLOSE = "Close"
+    # BRIAN: 平今 - Close Today
+    CLOSETODAY = "Close Today"
+    # BRIAN: 平昨 - Close Yesterday
+    CLOSEYESTERDAY = "Close Yesterday"
 
 
 class Status(Enum):
     """
     Order status.
     """
-    SUBMITTING = "提交中"
-    NOTTRADED = "未成交"
-    PARTTRADED = "部分成交"
-    ALLTRADED = "全部成交"
-    CANCELLED = "已撤销"
-    REJECTED = "拒单"
+    # BRIAN: 提交中 - Submitting
+    SUBMITTING = "Submitting"
+    # BRIAN: 未成交 - Not Traded
+    NOTTRADED = "Not Traded"
+    # BRIAN: 部分成交 - Part Traded
+    PARTTRADED = "Part Traded"
+    # BRIAN: 全部成交 - All Traded
+    ALLTRADED = "All Traded"
+    # BRIAN: 已撤销 - Canceled
+    CANCELLED = "Canceled"
+    # BRIAN: 拒单 - Rejected
+    REJECTED = "Rejected"
 
 
 class Product(Enum):
     """
     Product class.
     """
-    EQUITY = "股票"
-    FUTURES = "期货"
-    OPTION = "期权"
-    INDEX = "指数"
-    FOREX = "外汇"
-    SPOT = "现货"
+    # BRIAN: 股票 - Equity
+    EQUITY = "Equity"
+    # BRIAN: 期货 - Futures
+    FUTURES = "Futures"
+    # BRIAN: 期权 - Option
+    OPTION = "Option"
+    # BRIAN: 指数 - Index
+    INDEX = "Index"
+    # BRIAN: 外汇 - Forex
+    FOREX = "Forex"
+    # BRIAN: 现货 - Spot
+    SPOT = "Spot"
+    
     ETF = "ETF"
-    BOND = "债券"
-    WARRANT = "权证"
-    SPREAD = "价差"
-    FUND = "基金"
+    # BRIAN: 债券 - Bond
+    BOND = "Bond"
+    # BRIAN: 权证 - Warrant
+    WARRANT = "Warrant"
+    # BRIAN: 价差 - Spread
+    SPREAD = "Spread"
+    # BRIAN: 基金 - Fund
+    FUND = "Fund"
 
 
 class OrderType(Enum):
     """
     Order type.
     """
-    LIMIT = "限价"
-    MARKET = "市价"
+    # BRIAN: 限价 - Limit
+    LIMIT = "Limit"
+    # BRIAN: 市价 - Market
+    MARKET = "Market"
     STOP = "STOP"
     FAK = "FAK"
     FOK = "FOK"
@@ -69,8 +95,11 @@ class OptionType(Enum):
     """
     Option type.
     """
-    CALL = "看涨期权"
-    PUT = "看跌期权"
+    # <TO_CONFIRM>
+    # BRIAN: 看涨期权 - Call
+    CALL = "Call"
+    # BRIAN: 看跌期权 - Put
+    PUT = "Put"
 
 
 class Exchange(Enum):
