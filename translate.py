@@ -294,3 +294,69 @@
 # <TO_CONFIRM>
 # BRIAN: 看涨期权 - Call
 # BRIAN: 看跌期权 - Put
+
+
+# ======================================
+# editor.py
+# ======================================
+
+#
+# init_ui
+#
+# BRIAN: 策略编辑器 - Strategy Editor
+
+#
+# init_menu
+#
+# BRIAN: 文件 - File
+# BRIAN: 新建文件 - New File
+# BRIAN: 打开文件 - Open File
+# BRIAN: 关闭文件 - Close File
+# BRIAN: 保存 - Save
+# BRIAN: 另存为 - Save as...
+# BRIAN: 退出 - Close
+# BRIAN: 编辑 - Edit
+# BRIAN: 撤销 - Revoke
+# BRIAN: 恢复 - Restore
+# BRIAN: 复制 - Copy
+# BRIAN: 粘贴 - Paste
+# BRIAN: 剪切 - Cut
+# BRIAN: 查找 - Find
+# BRIAN: 替换 - Replace
+
+#
+# open_file
+#
+# BRIAN: 打开文件 - Open File
+
+#
+# save_file
+#
+# BRIAN: 保存 - Save
+
+#
+# save_file_as
+#
+# BRIAN: 保存 - Save
+
+#
+# closeEvent
+#
+# BRIAN: 退出保存 - Save and Exit
+# BRIAN: 是否要保存 - Save?
+# BRIAN: 保存 - Save
+
+
+#
+# FindDialog
+#
+
+#
+# init_ui
+#
+# BRIAN: 查找 - Find
+# BRIAN: 替换 - Replace
+# BRIAN: 大小写 - Case sensitive
+# BRIAN: 全词匹配 - Whole word
+# BRIAN: 选中区域 - In selection
+# BRIAN: 替换 - Replace
