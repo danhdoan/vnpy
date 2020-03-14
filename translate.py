@@ -360,3 +360,15 @@
 # BRIAN: 全词匹配 - Whole word
 # BRIAN: 选中区域 - In selection
 # BRIAN: 替换 - Replace
+
+
+# ======================================
+# vnpy/trader/ui/__init__.py
+# ======================================
+#
+# ExceptionDialog
+#
+#
+# init_ui
+#
+# BRIAN: 触发异常 - Trigger an Exception
