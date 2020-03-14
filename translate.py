@@ -725,9 +725,9 @@
 # BRIAN: 回测 - Backtesting
 
 
-# =================================================
+# ===================================================
 # vnpy/app/cta_strategy/strategies/<NAME>_strategy.py
-# =================================================
+# ===================================================
 
 #
 # <NAME>Strategy
@@ -742,22 +742,303 @@
 # BRIAN: 执行限价单测试 - Perform limit order test
 # BRIAN: 执行停止单测试 - Perform stop order test
 # BRIAN: 执行全部撤单测试 - Perform all cancel Tests
-# BRIAN:  -
-# BRIAN:  -
-# BRIAN:  -
-# BRIAN:  -
-# BRIAN:  -
-# BRIAN:  -
-# BRIAN:  -
-# BRIAN:  -
-# BRIAN:  -
-# BRIAN:  -
-# BRIAN:  -
-# BRIAN:  -
-# BRIAN:  -
-# BRIAN:  -
-# BRIAN:  -
-# BRIAN:  -
+
+
+# ===================================================
+# vnpy/app/cta_backtester/engine.py
+# ===================================================
+#
+# BacktestingEngine
+#
+#
+# load_data
+#
+# BRIAN: 开始加载历史数据 - Start loading historical data
+# BRIAN: 起始日期必须小于结束日期 - Start date must be less than end date
+# BRIAN: 参数优化起始点必须小于终止点 - 
+# Parameter optimization start point must be less than end point
+# BRIAN: 参数优化步进必须大于0 - Parameter optimization step must be greater than 0
+
+# BRIAN: 加载进度 - Loading progress
+# BRIAN: 历史数据加载完成，数据量 - 
+# Loading of historical data is complete, the amount of data
+# BRIAN: 触发异常，回测终止 - Trigger exception, backtest terminated
+# BRIAN: 策略初始化完成 - Policy initialization completed
+# BRIAN: 开始回放历史数据 - Start playback of historical data
+# BRIAN: 历史数据回放结束 - End of historical data playback
+# BRIAN: 开始计算逐日盯市盈亏 - 
+# Start calculating daily mark-to-market profit and loss
+# BRIAN: 成交记录为空，无法计算 - 
+# Transaction record is empty and cannot be calculated
+# BRIAN: 逐日盯市盈亏计算完成 - 
+# Completion of daily mark-to-market profit and loss calculation
+# BRIAN: 开始计算策略统计指标 - Start calculating strategy statistics
+# BRIAN: 首个交易日 - Start trading day
+# BRIAN: 最后交易日 - End trading day
+# BRIAN: 总交易日 - Total trading days
+# BRIAN: 盈利交易日 - Profitable trading days
+# BRIAN: 亏损交易日 - Lost trading days
+
+# BRIAN: 起始资金 - Starting capital
+# BRIAN: 结束资金 - End balance
+# BRIAN: 总收益率 - Total return
+# BRIAN: 年化收益 - Annual return
+# BRIAN: 最大回撤 - Max Drawdown
+# BRIAN: 百分比最大回撤 - Max DD percent
+# BRIAN: 最长回撤天数 - Max Drawdown duration
+
+# BRIAN: 总盈亏 - Total profit/loss
+# BRIAN: 总手续费 - Total commission
+# BRIAN: 总滑点 - Total slippage
+# BRIAN: 总成交金额 - Total turnover
+# BRIAN: 总成交笔数 - Total transactions
+
+# BRIAN: 日均盈亏 - Daily avg. profit and loss
+# BRIAN: 日均手续费 - Daily avg. commission
+# BRIAN: 日均滑点 - Daily slippage
+# BRIAN: 日均成交金额 - Daily avg. turnover
+# BRIAN: 日均成交笔数 - Daily avg. transactions
+
+# BRIAN: 日均收益率 - Daily avg. return
+# BRIAN: 收益标准差 - Standard deviation of returns
+# BRIAN: 收益回撤比 - Return DD ratio
+
+# BRIAN: 策略统计指标计算完成 - Computation of strategy statistics indicators
+
+# BRIAN: 优化参数组合为空，请检查 - Optimization parameter combination is empty, please check
+
+# BRIAN: 参数 - Parameter
+# BRIAN: 目标 - Target
+# BRIAN: 优化参数组合为空，请检查 - 
+# Optimization parameter combination is empty, please check
+# BRIAN: 优化目标未设置，请检查 - Optimization target is not set, please check
+
+# BRIAN: 参数优化空间 - Parameter optimization space
+# BRIAN: 每代族群总数 - Total population per generation
+# BRIAN: 优良筛选个数 - Excellent screening number
+# BRIAN: 迭代次数 - Number of iterations
+# BRIAN: 交叉概率 - Cross probability
+# BRIAN: 突变概率 - Mutation probability
+# BRIAN: 遗传算法优化完成，耗时{cost}秒 -
+
+
+
+
+
+# ===================================================
+# vnpy/app/cta_backtester/engine.py
+# ===================================================
+#
+# BacktesterEngine
+#
+
+#
+# init_engine
+#
+# BRIAN: 初始化CTA回测引擎 - Initialize the CTA Backtest engine
+# BRIAN: 策略文件加载完成 - Policy file loading is completed
+
+#
+# init_rqdata
+#
+# BRIAN: RQData数据接口初始化成功 - 
+# RQData data interface initialized successfully
+
+#
+# load_strategy_class_from_module
+#
+# BRIAN: 策略文件 - Policy file
+# BRIAN: 加载失败，触发异常 - Loading failed with exception
+
+#
+# reload_strategy_class
+#
+# BRIAN: 策略文件重载刷新完成 - Policy file reload completed
+
+#
+# start_backtesting
+#
+# BRIAN: 已有任务在运行中，请等待完成 - 
+# Task is already running, please wait for completion
+
+#
+# run_optimization
+#
+# BRIAN: 开始遗传算法参数优化 - 
+# Start genetic algorithm parameter optimization
+
+# BRIAN: 开始多进程参数优化 - 
+# Start multi-process parameter optimization
+
+# BRIAN: 多进程参数优化完成 - 
+# Multi-process parameter optimization completed
+
+#
+# start_optimization
+#
+# BRIAN: 已有任务在运行中，请等待完成 - 
+# Task already is running, please wait for completion
+
+#
+# run_downloading
+#
+# BRIAN: 开始下载历史数据 - Start downloading historical data
+# BRIAN: 历史数据下载完成 - Historical data download completed
+# BRIAN: 数据下载失败，无法获取 - Data download failed and cannot be obtained
+# BRIAN: 的历史数据 - Historical data
+# BRIAN: 数据下载失败，触发异常 - Data download failed with exception
+
+#
+# start_downloading
+#
+# BRIAN: 已有任务在运行中，请等待完成 - 
+# Task is already running, please wait for completion
+
+
+# ===================================================
+# vnpy/app/cta_backtester/ui/widget.py
+# ===================================================
+
+#
+# BacktesterManager
+#
+#
+# init_ui
+#
+# BRIAN: CTA回测 - CTA Backtest
+# BRIAN: 正向 - Forward
+# BRIAN: 反向 - Reverse
+# BRIAN: 开始回测 - Start backtesting
+# BRIAN: 参数优化 - Parameter Optimization
+# BRIAN: 优化结果 - Optimization Results
+# BRIAN: 下载数据 - Download Data
+# BRIAN: 委托记录 - Order Book
+# BRIAN: 成交记录 - Transaction Record
+# BRIAN: 每日盈亏 - Daily Profit/Loss
+# BRIAN: K线图表 - K-line chart
+# BRIAN: 代码编辑 - Code Editing
+# BRIAN: 策略重载 - Strategy Reload
+
+# BRIAN: 交易策略 - Trading Strategy
+# BRIAN: 本地代码 - Native Symbol
+# BRIAN: K线周期 - K-line Period
+# BRIAN: 开始日期 - Start Date
+# BRIAN: 结束日期 - End Date
+# BRIAN: 手续费率 - Commission Rate
+# BRIAN: 交易滑点 - Trading Slippage
+# BRIAN: 合约乘数 - Contract Multiplier
+# BRIAN: 价格跳动 - Price Tick
+# BRIAN: 回测资金 - Backtesting Fund
+# BRIAN: 合约模式 - Contract Model
+
+# BRIAN: 回测成交记录 - Backtesting Transaction Records
+# BRIAN: 回测委托记录 - Backtesting Commission Records
+# BRIAN: 回测每日盈亏 - Backtesting Daily Profit/Loss
+
+# BRIAN: 请点击[优化结果]按钮查看 - 
+# Please click the [Optimization Results] button to view
+
+# BRIAN: 正向 - Forward
+
+# BRIAN: 首个交易日 - Start Date
+# BRIAN: 最后交易日 - End Date
+# BRIAN: 总交易日 - Total Days
+# BRIAN: 盈利交易日 - Profitable Day
+# BRIAN: 亏损交易日 - Loss Day
+# BRIAN: 起始资金 - Capital
+# BRIAN: 结束资金 - End Balance
+# BRIAN: 总收益率 - Total Return
+# BRIAN: 年化收益 - Annual Return
+# BRIAN: 最大回撤 - Max Drawdown
+# BRIAN: 百分比最大回撤 - Max DD Percent
+# BRIAN: 总盈亏 - Total Profit-Loss
+# BRIAN: 总手续费 - Total Commission
+# BRIAN: 总滑点 - Total Slippage
+# BRIAN: 总成交额 - Total Turnover
+# BRIAN: 总成交笔数 - Total Transactions
+# BRIAN: 日均盈亏 - Daily Profit/Loss
+# BRIAN: 日均手续费 - Daily Commission
+# BRIAN: 日均滑点 - Daily Slippage
+# BRIAN: 日均成交额 - Daily Turnover
+# BRIAN: 日均成交笔数 - Daily Transactions
+# BRIAN: 日均收益率 - Daily Return
+# BRIAN: 收益标准差 - Daily Standard Deviation
+# BRIAN: 夏普比率 - Sharpe Ratio
+# BRIAN: 收益回撤比 - Return DD Ratio
+
+# BRIAN: 策略参数配置 - Policy Parameter Configuration
+# BRIAN: 确定 - Apply
+
+# BRIAN: 账户净值 - Account Equity
+# BRIAN: 净值回撤 - Net Drawdown
+# BRIAN: 每日盈亏 - Daily Profit/Loss
+# BRIAN: 盈亏分布 - Profit and Loss Distribution
+
+# BRIAN: 总收益率 - Total Return
+# BRIAN: 夏普比率 - Sharpe Ratio
+# BRIAN: 收益回撤比 - Return DD Ratio
+# BRIAN: 日均盈亏 - Daily Profit/Loss
+
+# BRIAN: 目标 - Target
+# BRIAN 参数 - Parameter
+# BRIAN: 开始 - Start
+# BRIAN: 步进 - Step
+# BRIAN: 结束 - End
+# BRIAN: 优化参数配置 - Optimization Parameter Configuration
+
+# BRIAN: 多进程优化 - Multi-process Optimization
+# BRIAN: 遗传算法优化 - Genetic Algorithm Optimization
+
+# BRIAN: 参数优化结果 - Parameter Optimization Results
+# BRIAN 参数 - Parameter
+# BRIAN: 保存 - Save
+# BRIAN: 保存数据 - Save Data
+# BRIAN: 参数 - Parameter
+
+# BRIAN: 成交号 - Trade ID
+# BRIAN: 委托号 - Order ID
+# BRIAN: 代码 - Symbol
+# BRIAN: 交易所 - Exchange
+# BRIAN: 方向 - Direction
+# BRIAN: 开平 - Offset
+# BRIAN: 价格 - Price
+# BRIAN: 数量 - Volume
+# BRIAN: 时间 - Datetime
+# BRIAN: 接口 - Gateway
+
+# BRIAN: 委托号 - Order ID
+# BRIAN: 代码 - Symbol
+# BRIAN: 交易所 - Exchange
+# BRIAN: 类型 - Type
+# BRIAN: 方向 - Direction
+# BRIAN: 开平 - Offset
+# BRIAN: 价格 - Price
+# BRIAN: 总数量 - Total Volume
+# BRIAN: 已成交 - Traded
+# BRIAN: 状态 - Status
+# BRIAN: 时间 - Datetime
+# BRIAN: 接口 - Gateway
+
+# BRIAN: 日期 - Date
+# BRIAN: 成交笔数 - No. of Transactions
+# BRIAN: 开盘持仓 - Open Positions
+# BRIAN: 收盘持仓 - End Positions
+# BRIAN: 成交额 - Tunrover
+# BRIAN: 手续费 - Commission
+# BRIAN: 滑点 - Slippage
+# BRIAN: 交易盈亏 - Trading Profit/Loss
+# BRIAN: 持仓盈亏 - Holding Profit/Loss
+# BRIAN: 总盈亏 - Total Profit/Loss
+# BRIAN: 净盈亏 - Net Profit/Loss
+
+# BRIAN: 回测K线图表 - Backtest Chart
+
+
+
+
+
+
+
 # BRIAN:  -
 # BRIAN:  -
 # BRIAN:  -

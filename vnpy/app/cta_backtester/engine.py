@@ -48,14 +48,16 @@ class BacktesterEngine(BaseEngine):
 
     def init_engine(self):
         """"""
-        self.write_log("初始化CTA回测引擎")
+        # BRIAN: 初始化CTA回测引擎 - Initialize the CTA Backtest engine
+        self.write_log("Initialize the CTA Backtest engine")
 
         self.backtesting_engine = BacktestingEngine()
         # Redirect log from backtesting engine outside.
         self.backtesting_engine.output = self.write_log
 
         self.load_strategy_class()
-        self.write_log("策略文件加载完成")
+        # BRIAN: 策略文件加载完成 - Policy file loading is completed
+        self.write_log("Policy file loading is completed")
 
         self.init_rqdata()
 
@@ -65,7 +67,9 @@ class BacktesterEngine(BaseEngine):
         """
         result = rqdata_client.init()
         if result:
-            self.write_log("RQData数据接口初始化成功")
+            # BRIAN: RQData数据接口初始化成功 - 
+            # RQData data interface initialized successfully
+            self.write_log("RQData data interface initialized successfully")
 
     def write_log(self, msg: str):
         """"""
@@ -114,14 +118,17 @@ class BacktesterEngine(BaseEngine):
                 if (isinstance(value, type) and issubclass(value, CtaTemplate) and value is not CtaTemplate):
                     self.classes[value.__name__] = value
         except:  # noqa
-            msg = f"策略文件{module_name}加载失败，触发异常：\n{traceback.format_exc()}"
+            # BRIAN: 策略文件 - Policy file
+            # BRIAN: 加载失败，触发异常 - Loading failed with exception
+            msg = f"Policy file {module_name} loading failed with exception:\n{traceback.format_exc()}"
             self.write_log(msg)
 
     def reload_strategy_class(self):
         """"""
         self.classes.clear()
         self.load_strategy_class()
-        self.write_log("策略文件重载刷新完成")
+        # BRIAN: 策略文件重载刷新完成 - Policy file reload completed
+        self.write_log("Policy file reload completed")
 
     def get_strategy_class_names(self):
         """"""
@@ -196,7 +203,9 @@ class BacktesterEngine(BaseEngine):
         setting: dict
     ):
         if self.thread:
-            self.write_log("已有任务在运行中，请等待完成")
+            # BRIAN: 已有任务在运行中，请等待完成 - 
+            # Task is already running, please wait for completion
+            self.write_log("Task is already running, please wait for completion")
             return False
 
         self.write_log("-" * 40)
@@ -256,9 +265,13 @@ class BacktesterEngine(BaseEngine):
     ):
         """"""
         if use_ga:
-            self.write_log("开始遗传算法参数优化")
+            # BRIAN: 开始遗传算法参数优化 - 
+            # Start genetic algorithm parameter optimization
+            self.write_log("Start genetic algorithm parameter optimization")
         else:
-            self.write_log("开始多进程参数优化")
+            # BRIAN: 开始多进程参数优化 - 
+            # Start multi-process parameter optimization
+            self.write_log("Start multi-process parameter optimization")
 
         self.result_values = None
 
@@ -297,7 +310,9 @@ class BacktesterEngine(BaseEngine):
 
         # Clear thread object handler.
         self.thread = None
-        self.write_log("多进程参数优化完成")
+        # BRIAN: 多进程参数优化完成 - 
+        # Multi-process parameter optimization completed
+        self.write_log("Multi-process parameter optimization completed")
 
         # Put optimization done event
         event = Event(EVENT_BACKTESTER_OPTIMIZATION_FINISHED)
@@ -320,7 +335,9 @@ class BacktesterEngine(BaseEngine):
         use_ga: bool
     ):
         if self.thread:
-            self.write_log("已有任务在运行中，请等待完成")
+            # BRIAN: 已有任务在运行中，请等待完成 - 
+            # Task already is running, please wait for completion
+            self.write_log("Task is already running, please wait for completion")
             return False
 
         self.write_log("-" * 40)
@@ -356,7 +373,8 @@ class BacktesterEngine(BaseEngine):
         """
         Query bar data from RQData.
         """
-        self.write_log(f"{vt_symbol}-{interval}开始下载历史数据")
+        # BRIAN: 开始下载历史数据 - Start downloading historical data 
+        self.write_log(f"{vt_symbol}-{interval} start downloading historical data")
 
         symbol, exchange = extract_vt_symbol(vt_symbol)
 
@@ -382,11 +400,14 @@ class BacktesterEngine(BaseEngine):
 
             if data:
                 database_manager.save_bar_data(data)
-                self.write_log(f"{vt_symbol}-{interval}历史数据下载完成")
+                # BRIAN: 历史数据下载完成 - historical data download completed
+                self.write_log(f"{vt_symbol}-{interval} historical data download completed")
             else:
-                self.write_log(f"数据下载失败，无法获取{vt_symbol}的历史数据")
+                # BRIAN: 数据下载失败，无法获取 - Data download failed and cannot be obtained
+                self.write_log(f"Data download failed and cannot be obtained {vt_symbol} historical data")
         except Exception:
-            msg = f"数据下载失败，触发异常：\n{traceback.format_exc()}"
+            # BRIAN: 数据下载失败，触发异常 - Data download failed with exception
+            msg = f"Data download failed with exception:\n{traceback.format_exc()}"
             self.write_log(msg)
 
         # Clear thread object handler.
@@ -400,7 +421,9 @@ class BacktesterEngine(BaseEngine):
         end: datetime
     ):
         if self.thread:
-            self.write_log("已有任务在运行中，请等待完成")
+            # BRIAN: 已有任务在运行中，请等待完成 - 
+            # Task is already running, please wait for completion
+            self.write_log("Task is already running, please wait for completion")
             return False
 
         self.write_log("-" * 40)
