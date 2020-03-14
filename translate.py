@@ -1,5 +1,5 @@
 # ======================================
-# mainwindow.py
+# vnpy/trader/ui/mainwindow.py
 # ====================================== 
 
 #
@@ -43,7 +43,7 @@
 
 
 # ======================================
-# widget.py
+# vnpy/trader/ui/widget.py
 # ======================================
 
 #
@@ -240,7 +240,7 @@
 
 
 # ======================================
-# constant.py
+# vnpy/trader/constant.py
 # ======================================
 
 #
@@ -297,7 +297,7 @@
 
 
 # ======================================
-# editor.py
+# vnpy/trader/ui/editor.py
 # ======================================
 
 #
@@ -372,3 +372,16 @@
 # init_ui
 #
 # BRIAN: 触发异常 - Trigger an Exception
+# BRIAN: 复制 - Copy
+# BRIAN: 求助 - Ask for Help
+# BRIAN: 关闭 - Close
+
+
+# ======================================
+# vnpy/trader/engine.py
+# ======================================
+#
+# get_gateway
+#
+# BRIAN: 找不到底层接口 - Cannot find Gateway
+# BRIAN: 找不到引擎 - Engine not found

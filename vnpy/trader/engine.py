@@ -118,7 +118,8 @@ class MainEngine:
         """
         gateway = self.gateways.get(gateway_name, None)
         if not gateway:
-            self.write_log(f"找不到底层接口：{gateway_name}")
+            # BRIAN: 找不到底层接口 - Cannot find Gateway
+            self.write_log(f"Cannot find Gateway: {gateway_name}")
         return gateway
 
     def get_engine(self, engine_name: str) -> "BaseEngine":
@@ -127,7 +128,8 @@ class MainEngine:
         """
         engine = self.engines.get(engine_name, None)
         if not engine:
-            self.write_log(f"找不到引擎：{engine_name}")
+            # BRIAN: 找不到引擎 - Engine not found
+            self.write_log(f"Engine not found: {engine_name}")
         return engine
 
     def get_default_setting(self, gateway_name: str) -> Optional[Dict[str, Any]]:
