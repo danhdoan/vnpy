@@ -141,11 +141,15 @@ JOIN_SYMBOL = "-"
 class IbGateway(BaseGateway):
     """"""
 
+    # BRIAN: TWS地址 - TWS Address
+    # BRIAN: TWS端口 - TWS Port
+    # BRIAN: 客户号 - Client Number
+    # BRIAN: 交易账户 - Transaction Account
     default_setting = {
-        "TWS地址": "127.0.0.1",
-        "TWS端口": 7497,
-        "客户号": 1,
-        "交易账户": ""
+        "TWS Address": "127.0.0.1",
+        "TWS Port": 7497,
+        "Client Number": 1,
+        "Transaction Account": ""
     }
 
     exchanges = list(EXCHANGE_VT2IB.keys())
@@ -160,10 +164,10 @@ class IbGateway(BaseGateway):
         """
         Start gateway connection.
         """
-        host = setting["TWS地址"]
-        port = setting["TWS端口"]
-        clientid = setting["客户号"]
-        account = setting["交易账户"]
+        host = setting["TWS Address"]
+        port = setting["TWS Port"]
+        clientid = setting["Client Number"]
+        account = setting["Transaction Account"]
 
         self.api.connect(host, port, clientid, account)
 
@@ -245,7 +249,8 @@ class IbApi(EWrapper):
         Callback when connection is established.
         """
         self.status = True
-        self.gateway.write_log("IB TWS连接成功")
+        # BRIAN: TWS连接成功 - TWS Connection succeeded
+        self.gateway.write_log("IB TWS Connection succeeded")
 
         self.load_contract_data()
 
@@ -254,7 +259,8 @@ class IbApi(EWrapper):
         Callback when connection is closed.
         """
         self.status = False
-        self.gateway.write_log("IB TWS连接断开")
+        # BRIAN: TWS连接断开 - TWS disconnected
+        self.gateway.write_log("IB TWS disconnected")
 
     def nextValidId(self, orderId: int):  # pylint: disable=invalid-name
         """
@@ -274,7 +280,8 @@ class IbApi(EWrapper):
         dt = datetime.fromtimestamp(time)
         time_string = dt.strftime("%Y-%m-%d %H:%M:%S.%f")
 
-        msg = f"服务器时间: {time_string}"
+        # BRIAN: 服务器时间 - Server time
+        msg = f"Server time: {time_string}"
         self.gateway.write_log(msg)
 
     def error(
@@ -285,7 +292,9 @@ class IbApi(EWrapper):
         """
         super().error(reqId, errorCode, errorString)
 
-        msg = f"信息通知，代码：{errorCode}，内容: {errorString}"
+        # BRIAN: 信息通知，代码 - Information notification, code
+        # BRIAN: 内容 - Content (dont use for brevity)
+        msg = f"Information notification, code:{errorCode} - {errorString}"
         self.gateway.write_log(msg)
 
     def tickPrice(  # pylint: disable=invalid-name
@@ -479,7 +488,8 @@ class IbApi(EWrapper):
             exchange = Exchange.SMART   # Use smart routing for default
 
         if not exchange:
-            msg = f"存在不支持的交易所持仓{contract.conId} {contract.exchange} {contract.primaryExchange}"
+            # BRIAN: 存在不支持的交易所持仓 - Unsupported exchange positions
+            msg = f"Unsupported exchange positions {contract.conId} {contract.exchange} {contract.primaryExchange}"
             self.gateway.write_log(msg)
             return
 
@@ -573,7 +583,8 @@ class IbApi(EWrapper):
             for account_code in accountsList.split(","):
                 self.account = account_code
 
-        self.gateway.write_log(f"当前使用的交易账号为{self.account}")
+        # BRIAN: 当前使用的交易账号为 - Current trading account is
+        self.gateway.write_log(f"Current trading account is {self.account}")
         self.client.reqAccountUpdates(True, self.account)
 
     def historicalData(self, reqId: int, ib_bar: IbBarData):
@@ -636,14 +647,17 @@ class IbApi(EWrapper):
         if not self.status:
             return
 
+        # BRIAN: 不支持的交易所 - Unsupported exchange
         if req.exchange not in EXCHANGE_VT2IB:
-            self.gateway.write_log(f"不支持的交易所{req.exchange}")
+            self.gateway.write_log(f"Unsupported exchange {req.exchange}")
             return
 
         # Extract ib contract detail
         ib_contract = generate_ib_contract(req.symbol, req.exchange)
         if not ib_contract:
-            self.gateway.write_log("代码解析失败，请检查格式是否正确")
+            # BRIAN: 代码解析失败，请检查格式是否正确 - 
+            # Symbol parsing failed, please check if the format is correct
+            self.gateway.write_log("Symbol parsing failed, please check if the format is correct")
             return
 
         # Get contract data from TWS.
@@ -671,11 +685,13 @@ class IbApi(EWrapper):
             return ""
 
         if req.exchange not in EXCHANGE_VT2IB:
-            self.gateway.write_log(f"不支持的交易所：{req.exchange}")
+            # BRIAN: 不支持的交易所 - Unsupported exchange
+            self.gateway.write_log(f"Unsupported exchanges: {req.exchange}")
             return ""
 
         if req.type not in ORDERTYPE_VT2IB:
-            self.gateway.write_log(f"不支持的价格类型：{req.type}")
+            # BRIAN: 不支持的价格类型 - Unsupported price type
+            self.gateway.write_log(f"Unsupported price type:{req.type}")
             return ""
 
         self.orderid += 1
@@ -770,7 +786,9 @@ class IbApi(EWrapper):
         for contract in self.contracts.values():
             self.gateway.on_contract(contract)
 
-        self.gateway.write_log("本地缓存合约信息加载成功")
+        # BRIAN: 本地缓存合约信息加载成功 - 
+        # Local cache contract information loaded successfully
+        self.gateway.write_log("Local cache contract information loaded successfully")
 
     def save_contract_data(self):
         """"""

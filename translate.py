@@ -385,3 +385,64 @@
 #
 # BRIAN: 找不到底层接口 - Cannot find Gateway
 # BRIAN: 找不到引擎 - Engine not found
+
+
+# ======================================
+# vnpy/gateway/ib/ib_gateway.py
+# ======================================
+#
+# IbGateway
+#
+# BRIAN: TWS地址 - TWS Address
+# BRIAN: TWS端口 - TWS Port
+# BRIAN: 客户号 - Client Number
+# BRIAN: 交易账户 - Transaction Account
+
+#
+# connectAck
+#
+# BRIAN: TWS连接成功 - TWS Connection succeeded
+
+#
+# connectionClosed
+#
+# BRIAN: TWS连接断开 - TWS disconnected
+
+#
+# currentTime
+#
+# BRIAN: 服务器时间 - Server time
+
+#
+# error
+#
+# BRIAN: 信息通知，代码 - Information notification, code
+# BRIAN: 内容 - Content
+
+
+#
+# updatePortfolio
+#
+# BRIAN: 存在不支持的交易所持仓 - Unsupported exchange positions
+
+#
+# managedAccounts
+#
+# BRIAN: 当前使用的交易账号为 - Current trading account is
+
+#
+# subscribe
+#
+# BRIAN: 不支持的交易所 - Unsupported exchange
+# BRIAN: 代码解析失败，请检查格式是否正确 - Symbol parsing failed, please check if the format is correct
+
+#
+# send_order
+#
+# BRIAN: 不支持的交易所 - Unsupported exchange
+# BRIAN: 不支持的价格类型 - Unsupported price type
+
+#
+# load_contract_data
+#
+# BRIAN: 本地缓存合约信息加载成功 - Local cache contract information loaded successfully
