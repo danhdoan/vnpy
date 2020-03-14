@@ -12,7 +12,8 @@ from time import time
 
 class TestStrategy(CtaTemplate):
     """"""
-    author = "用Python的交易员"
+    # BRIAN: 用Python的交易员 - Trader using Python
+    author = "Trader using Python"
 
     test_trigger = 10
 
@@ -40,19 +41,22 @@ class TestStrategy(CtaTemplate):
         """
         Callback when strategy is inited.
         """
-        self.write_log("策略初始化")
+        # BRIAN: 策略初始化 - Strategy initialization
+        self.write_log("Strategy initialization")
 
     def on_start(self):
         """
         Callback when strategy is started.
         """
-        self.write_log("策略启动")
+        # BRIAN: 策略启动 - Strategy starts
+        self.write_log("Strategy starts")
 
     def on_stop(self):
         """
         Callback when strategy is stopped.
         """
-        self.write_log("策略停止")
+        # BRIAN: 策略停止 - Strategy stops
+        self.write_log("Strategy stops")
 
     def on_tick(self, tick: TickData):
         """
@@ -73,9 +77,11 @@ class TestStrategy(CtaTemplate):
                 start = time()
                 test_func()
                 time_cost = (time() - start) * 1000
-                self.write_log("耗时%s毫秒" % (time_cost))
+                # BRIAN: 耗时%s毫秒 - Time consumming %s miliseconds
+                self.write_log("Time consumming %s miliseconds" % (time_cost))
             else:
-                self.write_log("测试已全部完成")
+                # BRIAN: 测试已全部完成 - Tests are all completed
+                self.write_log("Tests are all completed")
                 self.test_all_done = True
 
         self.put_event()
@@ -107,19 +113,23 @@ class TestStrategy(CtaTemplate):
     def test_market_order(self):
         """"""
         self.buy(self.last_tick.limit_up, 1)
-        self.write_log("执行市价单测试")
+        # BRIAN: 执行市价单测试 - Perform market order test
+        self.write_log("Perform market order test")
 
     def test_limit_order(self):
         """"""
         self.buy(self.last_tick.limit_down, 1)
-        self.write_log("执行限价单测试")
+        # BRIAN: 执行限价单测试 - Perform limit order test
+        self.write_log("Perform limit order test")
 
     def test_stop_order(self):
         """"""
         self.buy(self.last_tick.ask_price_1, 1, True)
-        self.write_log("执行停止单测试")
+        # BRIAN: 执行停止单测试 - Perform stop order test
+        self.write_log("Perform stop order test")
 
     def test_cancel_all(self):
         """"""
         self.cancel_all()
-        self.write_log("执行全部撤单测试")
+        # BRIAN: 执行全部撤单测试 - Perform all cancel Tests
+        self.write_log("Perform all cancel Tests")

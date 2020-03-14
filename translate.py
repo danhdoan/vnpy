@@ -723,3 +723,47 @@
 #
 # BRIAN: 实盘 - Live
 # BRIAN: 回测 - Backtesting
+
+
+# =================================================
+# vnpy/app/cta_strategy/strategies/<NAME>_strategy.py
+# =================================================
+
+#
+# <NAME>Strategy
+#
+# BRIAN: 用Python的交易员 - Trader using Python
+# BRIAN: 策略初始化 - Strategy initialized
+# BRIAN: 策略启动 - Strategy started
+# BRIAN: 策略停止 - Strategy stopped
+# BRIAN: 耗时%s毫秒 - Time consumming %s miliseconds
+# BRIAN: 测试已全部完成 - Tests are all completed
+# BRIAN: 执行市价单测试 - Perform market order test
+# BRIAN: 执行限价单测试 - Perform limit order test
+# BRIAN: 执行停止单测试 - Perform stop order test
+# BRIAN: 执行全部撤单测试 - Perform all cancel Tests
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
+# BRIAN:  -
