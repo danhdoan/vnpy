@@ -108,7 +108,10 @@ class CtaEngine(BaseEngine):
         self.load_strategy_setting()
         self.load_strategy_data()
         self.register_event()
-        self.write_log("CTA策略引擎初始化成功")
+
+        # BRIAN: CTA策略引擎初始化成功 - 
+        # CTA policy engine initialized successfully
+        self.write_log("CTA policy engine initialized successfully")
 
     def close(self):
         """"""
@@ -127,7 +130,9 @@ class CtaEngine(BaseEngine):
         """
         result = rqdata_client.init()
         if result:
-            self.write_log("RQData数据接口初始化成功")
+            # BRIAN: RQData数据接口初始化成功 - 
+            # RQData data interface initialized successfully
+            self.write_log("RQData data interface initialized successfully")
 
     def query_bar_from_rq(
         self, symbol: str, exchange: Exchange, interval: Interval, start: datetime, end: datetime
@@ -429,7 +434,9 @@ class CtaEngine(BaseEngine):
         """
         order = self.main_engine.get_order(vt_orderid)
         if not order:
-            self.write_log(f"撤单失败，找不到委托{vt_orderid}", strategy)
+            # BRIAN: 撤单失败，找不到委托 - 
+            # Order cancellation failed, no order found
+            self.write_log(f"Order cancellation failed, no order found {vt_orderid}", strategy)
             return
 
         req = order.create_cancel_request()
@@ -471,7 +478,9 @@ class CtaEngine(BaseEngine):
         """
         contract = self.main_engine.get_contract(strategy.vt_symbol)
         if not contract:
-            self.write_log(f"委托失败，找不到合约：{strategy.vt_symbol}", strategy)
+            # BRIAN: 委托失败，找不到合约 - 
+            # Order failed, no contract found
+            self.write_log(f"Order failed, no contract found: {strategy.vt_symbol}", strategy)
             return ""
 
         # Round order price and volume to nearest incremental value
@@ -590,7 +599,8 @@ class CtaEngine(BaseEngine):
             strategy.trading = False
             strategy.inited = False
 
-            msg = f"触发异常已停止\n{traceback.format_exc()}"
+            # BRIAN: 触发异常已停止 - Trigger exception stopped
+            msg = f"Trigger exception stopped\n{traceback.format_exc()}"
             self.write_log(msg, strategy)
 
     def add_strategy(
@@ -600,12 +610,16 @@ class CtaEngine(BaseEngine):
         Add a new strategy.
         """
         if strategy_name in self.strategies:
-            self.write_log(f"创建策略失败，存在重名{strategy_name}")
+            # BRIAN: 创建策略失败，存在重名 - 
+            # Creating policy failed with duplicate name
+            self.write_log(f"Creating policy failed with duplicate name {strategy_name}")
             return
 
         strategy_class = self.classes.get(class_name, None)
         if not strategy_class:
-            self.write_log(f"创建策略失败，找不到策略类{class_name}")
+            # BRIAN: 创建策略失败，找不到策略类 -
+            # Failed to create policy, no policy class found
+            self.write_log(f"Failed to create policy, no policy class found {class_name}")
             return
 
         strategy = strategy_class(self, strategy_name, vt_symbol, setting)
@@ -633,10 +647,13 @@ class CtaEngine(BaseEngine):
         strategy = self.strategies[strategy_name]
 
         if strategy.inited:
-            self.write_log(f"{strategy_name}已经完成初始化，禁止重复操作")
+            # BRIAN: 已经完成初始化，禁止重复操作 - 
+            # initialization is completed and repeated operations are prohibited
+            self.write_log(f"{strategy_name} initialization is completed and repeated operations are prohibited")
             return
 
-        self.write_log(f"{strategy_name}开始执行初始化")
+        # BRIAN: 开始执行初始化 - Start initialization
+        self.write_log(f"{strategy_name} start initialization")
 
         # Call on_init function of strategy
         self.call_strategy_func(strategy, strategy.on_init)
@@ -656,12 +673,15 @@ class CtaEngine(BaseEngine):
                 symbol=contract.symbol, exchange=contract.exchange)
             self.main_engine.subscribe(req, contract.gateway_name)
         else:
-            self.write_log(f"行情订阅失败，找不到合约{strategy.vt_symbol}", strategy)
+            # BRIAN: 行情订阅失败，找不到合约 - 
+            # Quote subscription failed, no contract found
+            self.write_log(f"Quote subscription failed, no contract found {strategy.vt_symbol}", strategy)
 
         # Put event to update init completed status.
         strategy.inited = True
         self.put_strategy_event(strategy)
-        self.write_log(f"{strategy_name}初始化完成")
+        # BRIAN: 初始化完成 - loading finished
+        self.write_log(f"{strategy_name} loading finished")
 
     def start_strategy(self, strategy_name: str):
         """
@@ -669,11 +689,14 @@ class CtaEngine(BaseEngine):
         """
         strategy = self.strategies[strategy_name]
         if not strategy.inited:
-            self.write_log(f"策略{strategy.strategy_name}启动失败，请先初始化")
+            # BRIAN: 策略 - Strategy
+            # BRIAN: 启动失败，请先初始化 - startup failed, please initialize first
+            self.write_log(f"Strategy {strategy.strategy_name} startup failed, please initialize first")
             return
 
         if strategy.trading:
-            self.write_log(f"{strategy_name}已经启动，请勿重复操作")
+            # BRIAN: 已经启动，请勿重复操作 - already started, do not repeat
+            self.write_log(f"{strategy_name} already started, do not repeat")
             return
 
         self.call_strategy_func(strategy, strategy.on_start)
@@ -720,7 +743,9 @@ class CtaEngine(BaseEngine):
         """
         strategy = self.strategies[strategy_name]
         if strategy.trading:
-            self.write_log(f"策略{strategy.strategy_name}移除失败，请先停止")
+            # BRIAN: 策略 - Strategy
+            # BRIAN: 移除失败，请先停止 - removal failed, please stop first
+            self.write_log(f"Strategy {strategy.strategy_name} removal failed, please stop first")
             return
 
         # Remove setting
@@ -784,7 +809,9 @@ class CtaEngine(BaseEngine):
                 if (isinstance(value, type) and issubclass(value, CtaTemplate) and value is not CtaTemplate):
                     self.classes[value.__name__] = value
         except:  # noqa
-            msg = f"策略文件{module_name}加载失败，触发异常：\n{traceback.format_exc()}"
+            # BRIAN: 策略文件 - Policy file
+            # BRIAN: 加载失败，触发异常 - loading failed with exception
+            msg = f"Policy file {module_name}loading failed with exception:\n{traceback.format_exc()}"
             self.write_log(msg)
 
     def load_strategy_data(self):

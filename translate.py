@@ -549,12 +549,159 @@
 # BRIAN: 时间格式 - Time format
 
 
+# ======================================
+# vnpy/gateway/ctp/ui/ctp_gateway.py
+# ======================================
+# BRIAN: 请选择开平方向 - Please choose Offset type
+# BRIAN:  - 
+# BRIAN:  - 
+# BRIAN:  - 
+# BRIAN:  - 
+# BRIAN:  - 
+# BRIAN:  - 
 
 
-# BRIAN:  - 
-# BRIAN:  - 
-# BRIAN:  - 
-# BRIAN:  - 
-# BRIAN:  - 
-# BRIAN:  - 
-# BRIAN:  - 
+# ======================================
+# vnpy/app/cta_strategy/ui/widget.py
+# ======================================
+
+#
+# CtaManager
+#
+
+#
+# init_ui
+#
+# BRIAN: CTA策略 - CTA Strategy
+# BRIAN: 添加策略 - Add Strategy
+# BRIAN: 全部初始化 - Initialize All
+# BRIAN: 全部启动 - Start All
+# BRIAN: 全部停止 - Stop All
+# BRIAN: 清空日志 - Clear Log
+
+
+#
+# StrategyManager
+#
+
+#
+# init_ui
+#
+# BRIAN: 初始化 - Initialize
+# BRIAN: 启动 - Start
+# BRIAN: 停止 - Stop
+# BRIAN: 编辑 - Edit
+# BRIAN: 移除 - Remove
+
+
+#
+# StopOrderMonitor
+#
+# BRIAN: 停止委托号 - Stop Order ID
+# BRIAN: 限价委托号 - Limit Order ID
+# BRIAN: 本地代码 - Native Symbol
+# BRIAN: 方向 - Direction
+# BRIAN: 开平 - Offset
+# BRIAN: 价格 - Price
+# BRIAN: 数量 - Volume
+# BRIAN: 状态 - Status
+# BRIAN: 锁仓 - Lock
+# BRIAN: 策略名 - Strategy Name
+
+#
+# LogMonitor
+#
+# BRIAN: 时间 - Datetime
+# BRIAN: 信息 - Information
+
+#
+# SettingEditor
+#
+
+#
+# init_ui
+#
+# BRIAN: 添加策略 - Add Strategy
+# BRIAN: 添加 - Add to
+# BRIAN: 参数编辑 - Parameter Editing
+# BRIAN: 确定 - Apply
+
+
+# ======================================
+# vnpy/app/cta_strategy/engine.py
+# ======================================
+
+#
+# CtaEngine
+#
+#
+# init_engine
+#
+# BRIAN: CTA策略引擎初始化成功 - 
+# CTA policy engine initialized successfully
+
+#
+# init_rqdata
+#
+# BRIAN: RQData数据接口初始化成功 - 
+# RQData data interface initialized successfully
+
+#
+# cancel_server_order
+#
+# BRIAN: 撤单失败，找不到委托 - 
+# Order cancellation failed, no order found
+
+#
+# send_order
+#
+# BRIAN: 委托失败，找不到合约 - 
+# Order failed, no contract found
+
+#
+# call_strategy_func
+#
+# BRIAN: 触发异常已停止 - Trigger exception stopped
+
+#
+# add_strategy
+#
+# BRIAN: 创建策略失败，存在重名 - 
+# Creating policy failed with duplicate name
+# BRIAN: 创建策略失败，找不到策略类 -
+# Failed to create policy, no policy class found
+
+#
+# _init_strategy
+#
+# BRIAN: 已经完成初始化，禁止重复操作 - 
+# initialization is completed and repeated operations are prohibited
+# BRIAN: 开始执行初始化 - Start initialization
+# BRIAN: 行情订阅失败，找不到合约 - 
+# Quote subscription failed, no contract found
+# BRIAN: 初始化完成 - loading finished
+
+#
+# start_strategy
+#
+# BRIAN: 策略 - Strategy
+# BRIAN: 启动失败，请先初始化 - startup failed, please initialize first
+
+# BRIAN: 已经启动，请勿重复操作 - already started, do not repeat
+
+#
+# remove_strategy
+#
+# BRIAN: 策略 - Strategy
+# BRIAN: 移除失败，请先停止 - removal failed, please stop first
+
+#
+# load_strategy_class_from_module
+#
+# BRIAN: 策略文件 - Policy file
+# BRIAN: 加载失败，触发异常 - loading failed with exception
+
+#
+# send_email
+#
+# BRIAN: CTA策略引擎 - CTA Strategy Engine

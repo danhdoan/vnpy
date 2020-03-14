@@ -39,24 +39,30 @@ class CtaManager(QtWidgets.QWidget):
 
     def init_ui(self):
         """"""
-        self.setWindowTitle("CTA策略")
+        # BRIAN: CTA策略 - CTA Strategy
+        self.setWindowTitle("CTA Strategy")
 
         # Create widgets
         self.class_combo = QtWidgets.QComboBox()
 
-        add_button = QtWidgets.QPushButton("添加策略")
+        # BRIAN: 添加策略 - Add Strategy
+        add_button = QtWidgets.QPushButton("Add Strategy")
         add_button.clicked.connect(self.add_strategy)
 
-        init_button = QtWidgets.QPushButton("全部初始化")
+        # BRIAN: 全部初始化 - Initialize All
+        init_button = QtWidgets.QPushButton("Initialize All")
         init_button.clicked.connect(self.cta_engine.init_all_strategies)
 
-        start_button = QtWidgets.QPushButton("全部启动")
+        # BRIAN: 全部启动 - Start All
+        start_button = QtWidgets.QPushButton("Start All")
         start_button.clicked.connect(self.cta_engine.start_all_strategies)
 
-        stop_button = QtWidgets.QPushButton("全部停止")
+        # BRIAN: 全部停止 - Stop All
+        stop_button = QtWidgets.QPushButton("Stop All")
         stop_button.clicked.connect(self.cta_engine.stop_all_strategies)
 
-        clear_button = QtWidgets.QPushButton("清空日志")
+        # BRIAN: 清空日志 - Clear Log
+        clear_button = QtWidgets.QPushButton("Clear Log")
         clear_button.clicked.connect(self.clear_log)
 
         self.scroll_layout = QtWidgets.QVBoxLayout()
@@ -183,21 +189,26 @@ class StrategyManager(QtWidgets.QFrame):
         self.setFrameShape(self.Box)
         self.setLineWidth(1)
 
-        self.init_button = QtWidgets.QPushButton("初始化")
+        # BRIAN: 初始化 - Initialize
+        self.init_button = QtWidgets.QPushButton("Initialize")
         self.init_button.clicked.connect(self.init_strategy)
 
-        self.start_button = QtWidgets.QPushButton("启动")
+        # BRIAN: 启动 - Start
+        self.start_button = QtWidgets.QPushButton("Start")
         self.start_button.clicked.connect(self.start_strategy)
         self.start_button.setEnabled(False)
 
-        self.stop_button = QtWidgets.QPushButton("停止")
+        # BRIAN: 停止 - Stop
+        self.stop_button = QtWidgets.QPushButton("Stop")
         self.stop_button.clicked.connect(self.stop_strategy)
         self.stop_button.setEnabled(False)
 
-        self.edit_button = QtWidgets.QPushButton("编辑")
+        # BRIAN: 编辑 - Edit
+        self.edit_button = QtWidgets.QPushButton("Edit")
         self.edit_button.clicked.connect(self.edit_strategy)
 
-        self.remove_button = QtWidgets.QPushButton("移除")
+        # BRIAN: 移除 - Remove
+        self.remove_button = QtWidgets.QPushButton("Remove")
         self.remove_button.clicked.connect(self.remove_strategy)
 
         strategy_name = self._data["strategy_name"]
@@ -340,21 +351,30 @@ class StopOrderMonitor(BaseMonitor):
     data_key = "stop_orderid"
     sorting = True
 
+    # BRIAN: 停止委托号 - Stop Order ID
+    # BRIAN: 限价委托号 - Limit Order ID
+    # BRIAN: 本地代码 - Native Symbol
+    # BRIAN: 方向 - Direction
+    # BRIAN: 开平 - Offset
+    # BRIAN: 价格 - Price
+    # BRIAN: 数量 - Volume
+    # BRIAN: 状态 - Status
+    # BRIAN: 锁仓 - Lock
+    # BRIAN: 策略名 - Strategy Name
     headers = {
         "stop_orderid": {
-            "display": "停止委托号",
-            "cell": BaseCell,
-            "update": False,
-        },
-        "vt_orderids": {"display": "限价委托号", "cell": BaseCell, "update": True},
-        "vt_symbol": {"display": "本地代码", "cell": BaseCell, "update": False},
-        "direction": {"display": "方向", "cell": EnumCell, "update": False},
-        "offset": {"display": "开平", "cell": EnumCell, "update": False},
-        "price": {"display": "价格", "cell": BaseCell, "update": False},
-        "volume": {"display": "数量", "cell": BaseCell, "update": False},
-        "status": {"display": "状态", "cell": EnumCell, "update": True},
-        "lock": {"display": "锁仓", "cell": BaseCell, "update": False},
-        "strategy_name": {"display": "策略名", "cell": BaseCell, "update": False},
+            "display": "Stop Order ID", "cell": BaseCell, "update": False},
+        "vt_orderids": {
+            "display": "Limit Order ID", "cell": BaseCell, "update": True},
+        "vt_symbol": {"display": "Native Symbol", "cell": BaseCell, "update": False},
+        "direction": {"display": "Direction", "cell": EnumCell, "update": False},
+        "offset": {"display": "Offset", "cell": EnumCell, "update": False},
+        "price": {"display": "Price", "cell": BaseCell, "update": False},
+        "volume": {"display": "Volume", "cell": BaseCell, "update": False},
+        "status": {"display": "Status", "cell": EnumCell, "update": True},
+        "lock": {"display": "Lock", "cell": BaseCell, "update": False},
+        "strategy_name": {
+            "display": "Strategy Name", "cell": BaseCell, "update": False},
     }
 
 
@@ -367,9 +387,11 @@ class LogMonitor(BaseMonitor):
     data_key = ""
     sorting = False
 
+    # BRIAN: 时间 - Datetime
+    # BRIAN: 信息 - Information
     headers = {
-        "time": {"display": "时间", "cell": TimeCell, "update": False},
-        "msg": {"display": "信息", "cell": MsgCell, "update": False},
+        "time": {"display": "Datetime", "cell": TimeCell, "update": False},
+        "msg": {"display": "Information", "cell": MsgCell, "update": False},
     }
 
     def init_ui(self):
@@ -415,13 +437,17 @@ class SettingEditor(QtWidgets.QDialog):
 
         # Add vt_symbol and name edit if add new strategy
         if self.class_name:
-            self.setWindowTitle(f"添加策略：{self.class_name}")
-            button_text = "添加"
+            # BRIAN: 添加策略 - Add Strategy
+            self.setWindowTitle(f"Add Strategy:{self.class_name}")
+            # BRIAN: 添加 - Add to
+            button_text = "Add to"
             parameters = {"strategy_name": "", "vt_symbol": ""}
             parameters.update(self.parameters)
         else:
-            self.setWindowTitle(f"参数编辑：{self.strategy_name}")
-            button_text = "确定"
+            # BRIAN: 参数编辑 - Parameter Editing
+            self.setWindowTitle(f"Parameter Editing:{self.strategy_name}")
+            # BRIAN: 确定 - Apply
+            button_text = "Apply"
             parameters = self.parameters
 
         for name, value in parameters.items():

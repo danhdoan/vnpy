@@ -17,7 +17,9 @@ class CtaStrategyApp(BaseApp):
     app_name = APP_NAME
     app_module = __module__
     app_path = Path(__file__).parent
-    display_name = "CTA策略"
+
+    # BRIAN: CTA策略 - CTA Strategy
+    display_name = "CTA Strategy"
     engine_class = CtaEngine
     widget_name = "CtaManager"
     icon_name = "cta.ico"
