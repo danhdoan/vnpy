@@ -681,6 +681,7 @@ class IbApi(EWrapper):
         """
         Send a new order.
         """
+        print('[Brian-DEBUG]', 'ib_gateway - send_order')
         if not self.status:
             return ""
 
@@ -698,6 +699,7 @@ class IbApi(EWrapper):
 
         ib_contract = generate_ib_contract(req.symbol, req.exchange)
         if not ib_contract:
+            print('[Brian-DEBUG]', 'ib_gateway - send_order - not ib_contract')
             return ""
 
         ib_order = Order()
@@ -718,16 +720,19 @@ class IbApi(EWrapper):
 
         order = req.create_order_data(str(self.orderid), self.gateway_name)
         self.gateway.on_order(order)
+        print('[Brian-DEBUG]', 'ib_gateway', order.vt_orderid)
         return order.vt_orderid
 
     def cancel_order(self, req: CancelRequest):
         """
         Cancel an existing order.
         """
+        print('[Brian-DEBUG]', 'ib_gateway', 'cancel_order 1')
         if not self.status:
             return
-
+        print('[Brian-DEBUG]', 'ib_gateway', 'cancel_order 2')
         self.client.cancelOrder(int(req.orderid))
+        print('[Brian-DEBUG]', 'ib_gateway', 'cancel_order 3')
 
     def query_history(self, req: HistoryRequest):
         """"""
@@ -828,6 +833,7 @@ def generate_ib_contract(symbol: str, exchange: Exchange) -> Optional[Contract]:
     """"""
     try:
         fields = symbol.split(JOIN_SYMBOL)
+        print('[Brian-DEBUG]', 'ib_gateway', 'generate_ib_contract', fields)
 
         ib_contract = Contract()
         ib_contract.exchange = EXCHANGE_VT2IB[exchange]
@@ -836,13 +842,15 @@ def generate_ib_contract(symbol: str, exchange: Exchange) -> Optional[Contract]:
         ib_contract.symbol = fields[0]
 
         if ib_contract.secType in ["FUT", "OPT", "FOP"]:
+            # ib_contract.lastTradeDateOrContractMonth = "Dec"
             ib_contract.lastTradeDateOrContractMonth = fields[1]
 
         if ib_contract.secType in ["OPT", "FOP"]:
             ib_contract.right = fields[2]
             ib_contract.strike = float(fields[3])
             ib_contract.multiplier = int(fields[4])
-    except IndexError:
+    except IndexError as e:
+        print('[Brian-Error]', 'ib_gateway', str(e))
         ib_contract = None
 
     return ib_contract

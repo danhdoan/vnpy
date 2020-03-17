@@ -65,12 +65,12 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # BRIAN: 行情 - Quote
         tick_widget, tick_dock = self.create_dock(
-            TickMonitor, "Quote", QtCore.Qt.RightDockWidgetArea
+            TickMonitor, "Quotes", QtCore.Qt.RightDockWidgetArea
         )
 
         # BRIAN: 委托 - Commission
         order_widget, order_dock = self.create_dock(
-            OrderMonitor, "Commission", QtCore.Qt.RightDockWidgetArea
+            OrderMonitor, "Orders", QtCore.Qt.RightDockWidgetArea
         )
 
         # BRIAN: 活动 - Activity
@@ -95,7 +95,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # BRIAN: 持仓 - Open Position
         position_widget, position_dock = self.create_dock(
-            PositionMonitor, "Open Position", QtCore.Qt.BottomDockWidgetArea
+            PositionMonitor, "Open Positions", QtCore.Qt.BottomDockWidgetArea
         )
 
         self.tabifyDockWidget(active_dock, order_dock)
