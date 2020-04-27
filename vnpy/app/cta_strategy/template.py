@@ -82,6 +82,7 @@ class CtaTemplate(ABC):
         """
         Get strategy data.
         """
+        print('[DEBUG]', 'app/cta_strategy/template.py', 'get_data')
         strategy_data = {
             "strategy_name": self.strategy_name,
             "vt_symbol": self.vt_symbol,
@@ -152,6 +153,7 @@ class CtaTemplate(ABC):
         """
         Send buy order to open a long position.
         """
+        print('[DEBUG]', 'app/cta_strategy/template.py', 'buy')
         return self.send_order(Direction.LONG, Offset.OPEN, price, volume, stop, lock)
 
     def sell(self, price: float, volume: float, stop: bool = False, lock: bool = False):
@@ -184,12 +186,15 @@ class CtaTemplate(ABC):
         """
         Send a new order.
         """
+        print('[DEBUG]', 'app/cta_strategy/template.py', 'send_order')
         if self.trading:
+            print('[DEBUG]', 'app/cta_strategy/template.py', 'send_order - trading')
             vt_orderids = self.cta_engine.send_order(
                 self, direction, offset, price, volume, stop, lock
             )
             return vt_orderids
         else:
+            print('[DEBUG]', 'app/cta_strategy/template.py', 'send_order - not trading')
             return []
 
     def cancel_order(self, vt_orderid: str):
@@ -228,6 +233,7 @@ class CtaTemplate(ABC):
         """
         Load historical bar data for initializing strategy.
         """
+        print('[DEBUG]', 'app/cta_strategy/template.py', 'load_bar')
         if not callback:
             callback = self.on_bar
 
@@ -243,14 +249,17 @@ class CtaTemplate(ABC):
         """
         Load historical tick data for initializing strategy.
         """
+        print('[DEBUG]', 'app/cta_strategy/template.py', 'load_tick')
         self.cta_engine.load_tick(self.vt_symbol, days, self.on_tick)
 
     def put_event(self):
         """
         Put an strategy data event for ui update.
         """
+        print('[DEBUG]', 'app/cta_strategy/template.py', 'put_event')
         if self.inited:
             self.cta_engine.put_strategy_event(self)
+        print('[DEBUG]', 'app/cta_strategy/template.py', 'finish put_event')
 
     def send_email(self, msg):
         """

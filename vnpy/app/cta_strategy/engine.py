@@ -73,6 +73,7 @@ class CtaEngine(BaseEngine):
 
     def __init__(self, main_engine: MainEngine, event_engine: EventEngine):
         """"""
+        print('[DEBUG]', 'app/cta_strategy/engine.py', '__init__')
         super(CtaEngine, self).__init__(
             main_engine, event_engine, APP_NAME)
 
@@ -234,6 +235,7 @@ class CtaEngine(BaseEngine):
 
     def check_stop_order(self, tick: TickData):
         """"""
+        # print('[DEBUG]', 'app/cta_strategy/engine.py', 'check_stop_order')
         for stop_order in list(self.stop_orders.values()):
             if stop_order.vt_symbol != tick.vt_symbol:
                 continue
@@ -476,8 +478,10 @@ class CtaEngine(BaseEngine):
     ):
         """
         """
+        print('[DEBUG]', 'app/cta_strategy/engine.py', 'send_order')
         contract = self.main_engine.get_contract(strategy.vt_symbol)
         if not contract:
+            print('[DEBUG]', 'app/cta_strategy/engine.py', 'send_order - not contract')
             # BRIAN: 委托失败，找不到合约 - 
             # Order failed, no contract found
             self.write_log(f"Order failed, no contract found: {strategy.vt_symbol}", strategy)
@@ -486,8 +490,10 @@ class CtaEngine(BaseEngine):
         # Round order price and volume to nearest incremental value
         price = round_to(price, contract.pricetick)
         volume = round_to(volume, contract.min_volume)
+        print('[DEBUG]', '\t', 'price:', price, 'volume:', volume)
 
         if stop:
+            print('[DEBUG]', 'app/cta_strategy/engine.py', 'send_order - stop')
             if contract.stop_supported:
                 return self.send_server_stop_order(strategy, contract, direction, offset, price, volume, lock)
             else:
@@ -527,7 +533,9 @@ class CtaEngine(BaseEngine):
         use_database: bool
     ):
         """"""
+        # print('[DEBUG]', 'app/cta_strategy/engine', 'load_bar')
         symbol, exchange = extract_vt_symbol(vt_symbol)
+        # print('[DEBUG]', '\t','symbol', symbol, 'exchange', exchange)
         end = datetime.now()
         start = end - timedelta(days)
         bars = []
@@ -570,6 +578,7 @@ class CtaEngine(BaseEngine):
         callback: Callable[[TickData], None]
     ):
         """"""
+        # print('[DEBUG]', 'app/cta_strategy/engine.py', 'load_tick')
         symbol, exchange = extract_vt_symbol(vt_symbol)
         end = datetime.now()
         start = end - timedelta(days)
@@ -609,6 +618,7 @@ class CtaEngine(BaseEngine):
         """
         Add a new strategy.
         """
+        # print('[DEBUG]', 'app/cta_strategy/engine.py', 'add_strategy')
         if strategy_name in self.strategies:
             # BRIAN: 创建策略失败，存在重名 - 
             # Creating policy failed with duplicate name
@@ -634,16 +644,19 @@ class CtaEngine(BaseEngine):
 
         self.put_strategy_event(strategy)
 
+
     def init_strategy(self, strategy_name: str):
         """
         Init a strategy.
         """
+        # print('[DEBUG]', 'app/cta_strategy/engine.py', 'init_strategy')
         self.init_executor.submit(self._init_strategy, strategy_name)
 
     def _init_strategy(self, strategy_name: str):
         """
         Init strategies in queue.
         """
+        # print('[DEBUG]', 'app/cta_strategy/engine.py', '_init_strategy')
         strategy = self.strategies[strategy_name]
 
         if strategy.inited:
@@ -669,10 +682,12 @@ class CtaEngine(BaseEngine):
         # Subscribe market data
         contract = self.main_engine.get_contract(strategy.vt_symbol)
         if contract:
+            print('[DEBUG]', 3)
             req = SubscribeRequest(
                 symbol=contract.symbol, exchange=contract.exchange)
             self.main_engine.subscribe(req, contract.gateway_name)
         else:
+            print('[DEBUG]', 4)
             # BRIAN: 行情订阅失败，找不到合约 - 
             # Quote subscription failed, no contract found
             self.write_log(f"Quote subscription failed, no contract found {strategy.vt_symbol}", strategy)
@@ -687,6 +702,8 @@ class CtaEngine(BaseEngine):
         """
         Start a strategy.
         """
+        # print('[DEBUG]', 'app/cta_strategy/engine.py', 'start_strategy')
+
         strategy = self.strategies[strategy_name]
         if not strategy.inited:
             # BRIAN: 策略 - Strategy
@@ -701,6 +718,7 @@ class CtaEngine(BaseEngine):
 
         self.call_strategy_func(strategy, strategy.on_start)
         strategy.trading = True
+        print('[DEBUG]', '\t', 'strategy.trading:', strategy.trading)
 
         self.put_strategy_event(strategy)
 
@@ -922,9 +940,11 @@ class CtaEngine(BaseEngine):
         """
         Put an event to update strategy status.
         """
+        # print('[DEBUG]', 'app/cta_strategy/engine.py', 'put_strategy_event')
         data = strategy.get_data()
         event = Event(EVENT_CTA_STRATEGY, data)
         self.event_engine.put(event)
+        # print('[DEBUG]', 'app/cta_strategy/engine.py', 'finish put_strategy_event')
 
     def write_log(self, msg: str, strategy: CtaTemplate = None):
         """

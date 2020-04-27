@@ -111,6 +111,7 @@ class BaseGateway(ABC):
         Order event push.
         Order event of a specific vt_orderid is also pushed.
         """
+        print('[DEBUG]', 'trader/gateway.py', 'BaseGateway-on_order')
         self.on_event(EVENT_ORDER, order)
         self.on_event(EVENT_ORDER + order.vt_orderid, order)
 

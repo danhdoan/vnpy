@@ -1,6 +1,7 @@
 """
 """
 
+import time
 import logging
 from logging import Logger
 import smtplib
@@ -179,6 +180,7 @@ class MainEngine:
         """
         Send new order request to a specific gateway.
         """
+        print('[DEBUG]', 'trader/engine.py', 'send_order')
         gateway = self.get_gateway(gateway_name)
         if gateway:
             return gateway.send_order(req)
@@ -337,6 +339,7 @@ class OmsEngine(BaseEngine):
 
     def __init__(self, main_engine: MainEngine, event_engine: EventEngine):
         """"""
+        print('[DEBUG]', 'trader/engine.py', 'OmsEngine - __init__')
         super(OmsEngine, self).__init__(main_engine, event_engine, "oms")
 
         self.ticks: Dict[str, TickData] = {}
@@ -345,6 +348,9 @@ class OmsEngine(BaseEngine):
         self.positions: Dict[str, PositionData] = {}
         self.accounts: Dict[str, AccountData] = {}
         self.contracts: Dict[str, ContractData] = {}
+
+        # Brian
+        self.currentContract: ContractData = None
 
         self.active_orders: Dict[str, OrderData] = {}
 
@@ -379,11 +385,13 @@ class OmsEngine(BaseEngine):
     def process_tick_event(self, event: Event) -> None:
         """"""
         tick = event.data
+        # print('[DEBUG]', 'trader/engine.py', 'process_tick_event', 'tick.vt_symbol:', tick.vt_symbol)
         self.ticks[tick.vt_symbol] = tick
 
     def process_order_event(self, event: Event) -> None:
         """"""
         order = event.data
+        print('[DEBUG]', 'trader/engine.py', 'process_order_event', 'order.vt_orderid:', order.vt_orderid)
         self.orders[order.vt_orderid] = order
 
         # If order is active, then update data in dict.
@@ -396,11 +404,15 @@ class OmsEngine(BaseEngine):
     def process_trade_event(self, event: Event) -> None:
         """"""
         trade = event.data
+        print('[DEBUG]', 'trader/engine.py', 'process_trade_event', 'trade.vt_tradeid', trade.vt_tradeid)
         self.trades[trade.vt_tradeid] = trade
+        # self.contracts[self.currentContract.vt_symbol] = self.currentContract
+
 
     def process_position_event(self, event: Event) -> None:
         """"""
         position = event.data
+        print('[DEBUG]', 'trader/engine.py', 'process_position_event', 'position.vt_positionid', position.vt_positionid)
         self.positions[position.vt_positionid] = position
 
     def process_account_event(self, event: Event) -> None:
@@ -411,18 +423,21 @@ class OmsEngine(BaseEngine):
     def process_contract_event(self, event: Event) -> None:
         """"""
         contract = event.data
+        print('[DEBUG]', 'trader/engine.py', 'process_contract_event', 'contract.vt_symbol:', contract.vt_symbol)
         self.contracts[contract.vt_symbol] = contract
 
     def get_tick(self, vt_symbol: str) -> Optional[TickData]:
         """
         Get latest market tick data by vt_symbol.
         """
+        print('[DEBUG]', 'trader/engine.py', 'get_tick')
         return self.ticks.get(vt_symbol, None)
 
     def get_order(self, vt_orderid: str) -> Optional[OrderData]:
         """
         Get latest order data by vt_orderid.
         """
+        print('[DEBUG]', 'trader/engine.py', 'get_order')
         return self.orders.get(vt_orderid, None)
 
     def get_trade(self, vt_tradeid: str) -> Optional[TradeData]:
@@ -441,13 +456,21 @@ class OmsEngine(BaseEngine):
         """
         Get latest account data by vt_accountid.
         """
+        print('[DEBUG]', 'trader/engine.py', 'get_account')
         return self.accounts.get(vt_accountid, None)
 
     def get_contract(self, vt_symbol: str) -> Optional[ContractData]:
         """
         Get contract data by vt_symbol.
         """
-        return self.contracts.get(vt_symbol, None)
+        TIME_FM = '%Y%m%d-%H%M%S'
+        print('[DEBUG]', time.strftime(TIME_FM), 'trader/engine.py', 'get_contract', vt_symbol)
+        contract = self.contracts.get(vt_symbol, None)
+        if contract:
+            print('[DEBUG]', 'found contract')
+        else:
+            print('[DEBUG]', 'no contract')
+        return contract
 
     def get_all_ticks(self) -> List[TickData]:
         """
@@ -483,7 +506,10 @@ class OmsEngine(BaseEngine):
         """
         Get all contract data.
         """
-        return list(self.contracts.values())
+        print('[DEBUG]', 'trader/engine.py', 'get_all_contracts')
+        L = list(self.contracts.values())
+        print('[DEBUG]', 'contracts:', L)
+        return L
 
     def get_all_active_orders(self, vt_symbol: str = "") -> List[OrderData]:
         """

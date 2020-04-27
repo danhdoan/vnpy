@@ -48,7 +48,7 @@ from vnpy.app.cta_backtester import CtaBacktesterApp
 # from vnpy.app.spread_trading import SpreadTradingApp
 # from vnpy.app.portfolio_manager import PortfolioManagerApp
 # from vnpy.app.option_master import OptionMasterApp
-# from vnpy.app.chart_wizard import ChartWizardApp
+from vnpy.app.chart_wizard import ChartWizardApp
 # from vnpy.app.excel_rtd import ExcelRtdApp
 from vnpy.app.data_manager import DataManagerApp
 
@@ -95,7 +95,7 @@ def main():
     # main_engine.add_gateway(BinancefGateway)
 
     main_engine.add_app(CtaStrategyApp)
-    main_engine.add_app(CtaBacktesterApp)
+    # main_engine.add_app(CtaBacktesterApp)
     # main_engine.add_app(CsvLoaderApp)
     # main_engine.add_app(AlgoTradingApp)
     # main_engine.add_app(DataRecorderApp)
@@ -105,9 +105,9 @@ def main():
     # main_engine.add_app(SpreadTradingApp)
     # main_engine.add_app(PortfolioManagerApp)
     # main_engine.add_app(OptionMasterApp)
-    # main_engine.add_app(ChartWizardApp)
+    main_engine.add_app(ChartWizardApp)
     # main_engine.add_app(ExcelRtdApp)
-    main_engine.add_app(DataManagerApp)
+    # main_engine.add_app(DataManagerApp)
 
     main_window = MainWindow(main_engine, event_engine)
     main_window.showMaximized()

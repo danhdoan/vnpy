@@ -138,18 +138,22 @@ class CtaManager(QtWidgets.QWidget):
 
     def add_strategy(self):
         """"""
+        print('[DEBUG]', 'app/cta_strategy/ui/widget.py', 'add_strategy')
         class_name = str(self.class_combo.currentText())
         if not class_name:
             return
 
         parameters = self.cta_engine.get_strategy_class_parameters(class_name)
+        print('[DEBUG]', 'app/cta_strategy/ui/widget.py', 'add_strategy', class_name)
         editor = SettingEditor(parameters, class_name=class_name)
         n = editor.exec_()
 
         if n == editor.Accepted:
             setting = editor.get_setting()
             vt_symbol = setting.pop("vt_symbol")
+            print('[DEBUG]', 'app/cta_strategy/ui/widget.py', 'add_strategy', vt_symbol)
             strategy_name = setting.pop("strategy_name")
+            print('[DEBUG]', 'app/cta_strategy/ui/widget.py', 'add_strategy', strategy_name)
 
             self.cta_engine.add_strategy(
                 class_name, strategy_name, vt_symbol, setting
@@ -268,10 +272,12 @@ class StrategyManager(QtWidgets.QFrame):
 
     def init_strategy(self):
         """"""
+        print('[DEBUG]', 'app/cta_strategy/ui/widget.py', 'init_strategy')
         self.cta_engine.init_strategy(self.strategy_name)
 
     def start_strategy(self):
         """"""
+        print('[DEBUG]', 'app/cta_strategy/ui/widget.py', 'start_strategy')
         self.cta_engine.start_strategy(self.strategy_name)
 
     def stop_strategy(self):

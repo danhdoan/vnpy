@@ -303,6 +303,7 @@ class IbApi(EWrapper):
         """
         Callback of tick price update.
         """
+        # print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'tickPrice')
         super().tickPrice(reqId, tickType, price, attrib)
 
         if tickType not in TICKFIELD_IB2VT:
@@ -331,6 +332,7 @@ class IbApi(EWrapper):
         """
         Callback of tick volume update.
         """
+        # print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'tickSize')
         super().tickSize(reqId, tickType, size)
 
         if tickType not in TICKFIELD_IB2VT:
@@ -348,6 +350,7 @@ class IbApi(EWrapper):
         """
         Callback of tick string update.
         """
+        # print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'tickString')
         super().tickString(reqId, tickType, value)
 
         if tickType != TickTypeEnum.LAST_TIMESTAMP:
@@ -375,6 +378,7 @@ class IbApi(EWrapper):
         """
         Callback of order status update.
         """
+        # print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'orderStatus')
         super().orderStatus(
             orderId,
             status,
@@ -410,6 +414,7 @@ class IbApi(EWrapper):
         """
         Callback when opening new order.
         """
+        # print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'openOrder')
         super().openOrder(
             orderId, ib_contract, ib_order, orderState
         )
@@ -440,6 +445,7 @@ class IbApi(EWrapper):
         """
         Callback of account update.
         """
+        # print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'updateAccountValue')
         super().updateAccountValue(key, val, currency, accountName)
 
         if not currency or key not in ACCOUNTFIELD_IB2VT:
@@ -469,6 +475,7 @@ class IbApi(EWrapper):
         """
         Callback of position update.
         """
+        # print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'updatePortfolio')
         super().updatePortfolio(
             contract,
             position,
@@ -513,6 +520,7 @@ class IbApi(EWrapper):
         """
         Callback of account update time.
         """
+        # print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'updateAccountTime')
         super().updateAccountTime(timeStamp)
         for account in self.accounts.values():
             self.gateway.on_account(copy(account))
@@ -521,6 +529,7 @@ class IbApi(EWrapper):
         """
         Callback of contract data update.
         """
+        print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'contractDetails')
         super().contractDetails(reqId, contractDetails)
 
         # Generate symbol from ib contract details
@@ -556,6 +565,7 @@ class IbApi(EWrapper):
         """
         Callback of trade data update.
         """
+        print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'execDetails')
         super().execDetails(reqId, contract, execution)
 
         # today_date = datetime.now().strftime("%Y%m%d")
@@ -577,6 +587,7 @@ class IbApi(EWrapper):
         """
         Callback of all sub accountid.
         """
+        print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'managedAccounts')
         super().managedAccounts(accountsList)
 
         if not self.account:
@@ -591,6 +602,7 @@ class IbApi(EWrapper):
         """
         Callback of history data update.
         """
+        print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'historicalData')
         dt = datetime.strptime(ib_bar.date, "%Y%m%d %H:%M:%S")
 
         bar = BarData(
@@ -612,6 +624,7 @@ class IbApi(EWrapper):
         """
         Callback of history data finished.
         """
+        print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'historicalDataEnd')
         self.history_condition.acquire()
         self.history_condition.notify()
         self.history_condition.release()
@@ -623,6 +636,7 @@ class IbApi(EWrapper):
         if self.status:
             return
 
+        print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'connect')
         self.clientid = clientid
         self.account = account
         self.client.connect(host, port, clientid)
@@ -637,6 +651,7 @@ class IbApi(EWrapper):
         if not self.status:
             return
 
+        print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'close')
         self.status = False
         self.client.disconnect()
 
@@ -647,6 +662,7 @@ class IbApi(EWrapper):
         if not self.status:
             return
 
+        print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'subscribe')
         # BRIAN: 不支持的交易所 - Unsupported exchange
         if req.exchange not in EXCHANGE_VT2IB:
             self.gateway.write_log(f"Unsupported exchange {req.exchange}")
@@ -681,9 +697,12 @@ class IbApi(EWrapper):
         """
         Send a new order.
         """
-        print('[Brian-DEBUG]', 'ib_gateway - send_order')
+        print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'send_order')
         if not self.status:
             return ""
+
+        sub_req = SubscribeRequest(req.symbol, req.exchange)
+        self.subscribe(sub_req)
 
         if req.exchange not in EXCHANGE_VT2IB:
             # BRIAN: 不支持的交易所 - Unsupported exchange
@@ -696,10 +715,11 @@ class IbApi(EWrapper):
             return ""
 
         self.orderid += 1
+        print('[DEBUG]', 'orderid:', self.orderid)
 
         ib_contract = generate_ib_contract(req.symbol, req.exchange)
         if not ib_contract:
-            print('[Brian-DEBUG]', 'ib_gateway - send_order - not ib_contract')
+            print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'send_order', 'not ib_contract')
             return ""
 
         ib_order = Order()
@@ -719,23 +739,22 @@ class IbApi(EWrapper):
         self.client.reqIds(1)
 
         order = req.create_order_data(str(self.orderid), self.gateway_name)
+        # self.gateway.on_order(order)
         self.gateway.on_order(order)
-        print('[Brian-DEBUG]', 'ib_gateway', order.vt_orderid)
         return order.vt_orderid
 
     def cancel_order(self, req: CancelRequest):
         """
         Cancel an existing order.
         """
-        print('[Brian-DEBUG]', 'ib_gateway', 'cancel_order 1')
+        print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'cancel_order')
         if not self.status:
             return
-        print('[Brian-DEBUG]', 'ib_gateway', 'cancel_order 2')
         self.client.cancelOrder(int(req.orderid))
-        print('[Brian-DEBUG]', 'ib_gateway', 'cancel_order 3')
 
     def query_history(self, req: HistoryRequest):
         """"""
+        print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'query_history')
         self.history_req = req
 
         self.reqid += 1
@@ -784,11 +803,13 @@ class IbApi(EWrapper):
 
     def load_contract_data(self):
         """"""
+        print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'load_contract_data')
         f = shelve.open(self.data_filepath)
         self.contracts = f.get("contracts", {})
         f.close()
 
         for contract in self.contracts.values():
+            print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'load_contract_data', contract)
             self.gateway.on_contract(contract)
 
         # BRIAN: 本地缓存合约信息加载成功 - 
@@ -797,6 +818,7 @@ class IbApi(EWrapper):
 
     def save_contract_data(self):
         """"""
+        print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'save_contract_data')
         f = shelve.open(self.data_filepath)
         f["contracts"] = self.contracts
         f.close()
@@ -833,7 +855,8 @@ def generate_ib_contract(symbol: str, exchange: Exchange) -> Optional[Contract]:
     """"""
     try:
         fields = symbol.split(JOIN_SYMBOL)
-        print('[Brian-DEBUG]', 'ib_gateway', 'generate_ib_contract', fields)
+        print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'generate_ib_contract')
+        # print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'generate_ib_contract', fields)
 
         ib_contract = Contract()
         ib_contract.exchange = EXCHANGE_VT2IB[exchange]
@@ -842,7 +865,6 @@ def generate_ib_contract(symbol: str, exchange: Exchange) -> Optional[Contract]:
         ib_contract.symbol = fields[0]
 
         if ib_contract.secType in ["FUT", "OPT", "FOP"]:
-            # ib_contract.lastTradeDateOrContractMonth = "Dec"
             ib_contract.lastTradeDateOrContractMonth = fields[1]
 
         if ib_contract.secType in ["OPT", "FOP"]:
@@ -850,7 +872,7 @@ def generate_ib_contract(symbol: str, exchange: Exchange) -> Optional[Contract]:
             ib_contract.strike = float(fields[3])
             ib_contract.multiplier = int(fields[4])
     except IndexError as e:
-        print('[Brian-Error]', 'ib_gateway', str(e))
+        print('[ERROR]', 'gateway/ib/ib_gateway.py', 'generate_ib_contract', str(e))
         ib_contract = None
 
     return ib_contract
@@ -858,6 +880,7 @@ def generate_ib_contract(symbol: str, exchange: Exchange) -> Optional[Contract]:
 
 def generate_symbol(ib_contract: Contract) -> str:
     """"""
+    print('[DEBUG]', 'gateway/ib/ib_gateway.py', 'generate_symbol')
     fields = [ib_contract.symbol]
 
     if ib_contract.secType in ["FUT", "OPT", "FOP"]:

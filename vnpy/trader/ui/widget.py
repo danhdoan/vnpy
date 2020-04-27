@@ -798,6 +798,7 @@ class TradingWidget(QtWidgets.QWidget):
 
     def process_tick_event(self, event: Event) -> None:
         """"""
+        # print('[DEBUG]', 'trader/ui/widget.py', 'process_tick_event')
         tick = event.data
         if tick.vt_symbol != self.vt_symbol:
             return
@@ -837,6 +838,7 @@ class TradingWidget(QtWidgets.QWidget):
         """
         Set the tick depth data to monitor by vt_symbol.
         """
+        print('[DEBUG]', 'trader/ui/widget.py', 'set_vt_symbol')
         symbol = str(self.symbol_line.text())
         if not symbol:
             return
@@ -1050,6 +1052,7 @@ class ContractManager(QtWidgets.QWidget):
         """
         Show contracts by symbol
         """
+        print('[DEBUG]', 'trader/ui/widget.py', 'show_contracts')
         flt = str(self.filter_line.text())
 
         all_contracts = self.main_engine.get_all_contracts()

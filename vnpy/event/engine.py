@@ -111,6 +111,7 @@ class EventEngine:
         Register a new handler function for a specific event type. Every
         function can only be registered once for each event type.
         """
+        # print('[DEBUG]', 'event/engine.py', 'register', 'type:', type)
         handler_list = self._handlers[type]
         if handler not in handler_list:
             handler_list.append(handler)
