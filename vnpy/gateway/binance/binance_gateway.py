@@ -253,7 +253,8 @@ class BinanceRestApi(RestClient):
         self.init(REST_HOST, proxy_host, proxy_port)
         self.start(session_number)
 
-        self.gateway.write_log("REST API启动成功")
+        # BRIAN: REST API启动成功 - REST API started successfully
+        self.gateway.write_log("REST API started successfully")
 
         self.query_time()
         self.query_account()
@@ -426,8 +427,8 @@ class BinanceRestApi(RestClient):
 
             if account.balance:
                 self.gateway.on_account(account)
-
-        self.gateway.write_log("账户资金查询成功")
+        # BRIAN: 账户资金查询成功 - Account funds inquiry succeeded
+        self.gateway.write_log("Account funds inquiry succeeded")
 
     def on_query_order(self, data, request):
         """"""
@@ -449,8 +450,8 @@ class BinanceRestApi(RestClient):
                 gateway_name=self.gateway_name,
             )
             self.gateway.on_order(order)
-
-        self.gateway.write_log("委托信息查询成功")
+        # BRIAN: 委托信息查询成功 - Entrusted information query succeeed
+        self.gateway.write_log("Entrusted information query succeeded")
 
     def on_query_contract(self, data, request):
         """"""
@@ -483,7 +484,8 @@ class BinanceRestApi(RestClient):
 
             symbol_name_map[contract.symbol] = contract.name
 
-        self.gateway.write_log("合约信息查询成功")
+        # BRIAN: 合约信息查询成功 - Contract information query succeeded
+        self.gateway.write_log("Contract information query succeeded")
 
     def on_send_order(self, data, request):
         """"""
@@ -497,7 +499,8 @@ class BinanceRestApi(RestClient):
         order.status = Status.REJECTED
         self.gateway.on_order(order)
 
-        msg = f"委托失败，状态码：{status_code}，信息：{request.response.text}"
+        # BRIAN: 委托失败，状态码 - Order failed, status code
+        msg = f"Order failed, status code: {status_code}，information: {request.response.text}"
         self.gateway.write_log(msg)
 
     def on_send_order_error(
@@ -560,13 +563,15 @@ class BinanceRestApi(RestClient):
 
             # Break if request failed with other status code
             if resp.status_code // 100 != 2:
-                msg = f"获取历史数据失败，状态码：{resp.status_code}，信息：{resp.text}"
+                # BRIAN: 获取历史数据失败，状态码 - Failed to get historical data, status code
+                msg = f"Failed to get historical data, status code: {resp.status_code}, information:{resp.text}"
                 self.gateway.write_log(msg)
                 break
             else:
                 data = resp.json()
                 if not data:
-                    msg = f"获取历史数据为空，开始时间：{start_time}"
+                    # BRIAN: 获取历史数据为空，开始时间 - Historical data is empty, start time
+                    msg = f"Historical data is empty, start time:{start_time}"
                     self.gateway.write_log(msg)
                     break
 
@@ -593,7 +598,8 @@ class BinanceRestApi(RestClient):
 
                 begin = buf[0].datetime
                 end = buf[-1].datetime
-                msg = f"获取历史数据成功，{req.symbol} - {req.interval.value}，{begin} - {end}"
+                # BRIAN: 获取历史数据成功 - Successfully obtained historical data
+                msg = f"Successfully obtained historical data,{req.symbol} - {req.interval.value}，{begin} - {end}"
                 self.gateway.write_log(msg)
 
                 # Break if total data count less than limit (latest date collected)
@@ -624,7 +630,8 @@ class BinanceTradeWebsocketApi(WebsocketClient):
 
     def on_connected(self):
         """"""
-        self.gateway.write_log("交易Websocket API连接成功")
+        # BRIAN: 交易Websocket API连接成功 - Transaction Websocket API connection is successful
+        self.gateway.write_log("Transaction Websocket API connection is successful")
 
     def on_packet(self, packet: dict):  # type: (dict)->None
         """"""
@@ -713,12 +720,14 @@ class BinanceDataWebsocketApi(WebsocketClient):
 
     def on_connected(self):
         """"""
-        self.gateway.write_log("行情Websocket API连接刷新")
+        # BRIAN: 行情Websocket API连接刷新 - Quotes Websocket API connection refresh
+        self.gateway.write_log("Quotes Websocket API connection refresh")
 
     def subscribe(self, req: SubscribeRequest):
         """"""
         if req.symbol not in symbol_name_map:
-            self.gateway.write_log(f"找不到该合约代码{req.symbol}")
+            # BRIAN: 找不到该合约代码 - The contract code cannot be found
+            self.gateway.write_log(f"The contract code cannot be found: {req.symbol}")
             return
 
         # Create tick buf data
