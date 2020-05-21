@@ -423,7 +423,7 @@ class OmsEngine(BaseEngine):
     def process_contract_event(self, event: Event) -> None:
         """"""
         contract = event.data
-        print('[DEBUG]', 'trader/engine.py', 'process_contract_event', 'contract.vt_symbol:', contract.vt_symbol)
+        # print('[DEBUG]', 'trader/engine.py', 'process_contract_event', 'contract.vt_symbol:', contract.vt_symbol)
         self.contracts[contract.vt_symbol] = contract
 
     def get_tick(self, vt_symbol: str) -> Optional[TickData]:

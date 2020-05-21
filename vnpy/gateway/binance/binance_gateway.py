@@ -318,6 +318,7 @@ class BinanceRestApi(RestClient):
 
     def send_order(self, req: OrderRequest):
         """"""
+        print('[DEBUG]', 'gateway/binance/binance_gateway', 'BinanceRestApi-send_order')
         orderid = str(self.connect_time + self._new_order_id())
         order = req.create_order_data(
             orderid,
@@ -331,10 +332,10 @@ class BinanceRestApi(RestClient):
 
         params = {
             "symbol": req.symbol,
-            "timeInForce": "GTC",
+            # "timeInForce": "GTC",
             "side": DIRECTION_VT2BINANCE[req.direction],
             "type": ORDERTYPE_VT2BINANCE[req.type],
-            "price": str(req.price),
+            # "price": str(req.price),
             "quantity": str(req.volume),
             "newClientOrderId": orderid,
             "newOrderRespType": "ACK"
@@ -655,6 +656,7 @@ class BinanceTradeWebsocketApi(WebsocketClient):
 
     def on_order(self, packet: dict):
         """"""
+        print('[DEBUG]', 'vnpy/gateway/binance/binance_gateway', 'on_order')
         dt = datetime.fromtimestamp(packet["O"] / 1000)
         time = dt.strftime("%Y-%m-%d %H:%M:%S")
 
